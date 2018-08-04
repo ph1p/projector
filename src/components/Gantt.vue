@@ -25,6 +25,7 @@
           </div>
           <ul class="projects">
             <li
+            @click="$router.push(`/project/edit/${project.id}`)"
             v-for="(project, index) in user.projects"
             v-tooltip="project.name"
             :key="project.id"
@@ -252,11 +253,12 @@ export default {
         color: #fff;
         overflow: hidden;
         position: relative;
+        cursor: pointer;
         &.highlight {
           opacity: 1;
         }
         &.lowlight {
-          filter: grayscale(100);
+          background-color: #ddd !important;
         }
         &.left {
           box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, 0.8);
