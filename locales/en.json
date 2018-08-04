@@ -10,7 +10,7 @@
   "parallel": "Parallel",
   "project": {
     "self": "Project | Projects",
-    "amountParallel": "{amount} parallel Projects",
+    "amount-parallel": "{amount} parallel Projects",
     "name": "Project Name",
     "add": "Add project",
     "new": "New Project",

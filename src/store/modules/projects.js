@@ -56,8 +56,7 @@ export default {
           dateEnd: moment(project.dateEnd),
           range: moment.range(project.dateStart, project.dateEnd)
         })),
-    projectById: state => id =>
-      state.data.filter(project => project.id === parseInt(id, 0))[0]
+    projectById: state => id => state.data.filter(project => project.id === parseInt(id, 0))[0]
   },
   actions: {
     addProject({ commit, state }, project) {

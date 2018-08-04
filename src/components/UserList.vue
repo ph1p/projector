@@ -45,18 +45,10 @@ export default {
     toggleChecked: Function
   },
   computed: {
-    ...mapGetters([
-      'projects',
-      'projectsByUser',
-      'maxConcurrentProjectsPerUser'
-    ]),
+    ...mapGetters(['projects', 'projectsByUser', 'maxConcurrentProjectsPerUser']),
     allUsers() {
       return this.users
-        .filter(
-          user =>
-            user.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !==
-            -1
-        )
+        .filter(user => user.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
         .map(user => ({
           ...user,
           maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user)
@@ -68,9 +60,7 @@ export default {
       const userProjects = this.projectsByUser(user);
 
       const concurrentProjects = userProjects.map(
-        project =>
-          userProjects.filter(data => project.dateStart.within(data.range))
-            .length
+        project => userProjects.filter(data => project.dateStart.within(data.range)).length
       );
 
       return concurrentProjects.length ? Math.max(...concurrentProjects) : 0;

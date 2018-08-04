@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import Project from './views/Project.vue';
-import NewProject from './views/NewProject.vue';
-import EditProject from './views/EditProject.vue';
+const Project = () => import(/* webpackChunkName: "project" */ './views/Project.vue');
+const NewProject = () => import(/* webpackChunkName: "project" */ './views/NewProject.vue');
+const EditProject = () => import(/* webpackChunkName: "project" */ './views/EditProject.vue');
 
 Vue.use(Router);
 

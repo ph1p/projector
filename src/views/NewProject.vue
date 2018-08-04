@@ -21,7 +21,10 @@
 
       <div class="form-field">
         <strong>{{$t('color')}}:</strong>
-        <input type="color" v-model="localProject.color" />
+        <div class="color">
+          <div class="color__preview" :style="{backgroundColor: localProject.color}" @click="isColorPickerOpen = !isColorPickerOpen;"></div>
+          <color-picker class="color__picker" v-if="isColorPickerOpen" v-model="inputColor"></color-picker>
+        </div>
       </div>
     </div>
 
@@ -58,6 +61,7 @@ import { mapGetters, mapActions } from 'vuex';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
+import { Sketch } from 'vue-color';
 
 import UnitList from '@/components/UnitList.vue';
 import Button from '@/components/layout/Button.vue';
@@ -68,6 +72,8 @@ export default {
   name: 'new-project',
   data() {
     return {
+      isColorPickerOpen: false,
+      inputColor: '#ffffff',
       localProject: {
         name: '',
         dateStart: '',
@@ -77,7 +83,13 @@ export default {
       localProjects: []
     };
   },
+  watch: {
+    inputColor(value) {
+      this.localProject.color = value.hex;
+    }
+  },
   components: {
+    'color-picker': Sketch,
     Datepicker,
     UnitList,
     UserList,
@@ -95,11 +107,7 @@ export default {
       );
     },
     isDateSpanValid() {
-      return (
-        moment(this.localProject.dateEnd).diff(
-          moment(this.localProject.dateStart)
-        ) > 0
-      );
+      return moment(this.localProject.dateEnd).diff(moment(this.localProject.dateStart)) > 0;
     },
     checkedUsers() {
       return this.localUsers.filter(user => user.isChecked);
@@ -119,24 +127,22 @@ export default {
     },
     toggleChecked(id, maxConcurrentProjects) {
       const user = this.findUserById(id);
-      if (
-        maxConcurrentProjects < this.maxConcurrentProjectsPerUser ||
-        user.isChecked
-      ) {
+      if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked) {
         user.isChecked = !user.isChecked;
       } else {
         this.$snotify.error(this.$t('notifications.to-many-projects'));
       }
     },
     usersInUnit(unitIds) {
-      return this.localUsers.filter(
-        user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]
-      );
+      return this.localUsers.filter(user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]);
     }
   },
   created() {
     this.localProject.color = this.getRandomColor;
-    this.localUsers = this.localUsers.map(user => ({...user, isChecked: false}));
+    this.localUsers = this.localUsers.map(user => ({
+      ...user,
+      isChecked: false
+    }));
   }
 };
 </script>
@@ -156,6 +162,25 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 40px;
   grid-gap: 30px;
+  .color {
+    position: relative;
+    border: 1px solid #999;
+    border-radius: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    display: inline-block;
+    &__preview {
+      border-radius: 100%;
+      width: 25px;
+      height: 25px;
+    }
+    &__picker {
+      position: absolute;
+      z-index: 5;
+      top: 0px;
+      right: 45px;
+    }
+  }
   .form-field {
     margin-bottom: 20px;
     input {
@@ -164,14 +189,6 @@ export default {
       border: 1px solid #ddd;
       padding: 10px;
       border-radius: 5px;
-      &[type='color'] {
-        padding: 0;
-        border: 0;
-        border-radius: 5px;
-        height: 40px;
-        overflow: hidden;
-        margin: 0;
-      }
     }
     &:last-child {
       margin: 0;

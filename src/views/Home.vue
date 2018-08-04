@@ -49,9 +49,7 @@ export default {
   },
   methods: {
     usersInUnit(unitIds) {
-      return this.users.filter(
-        user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]
-      );
+      return this.users.filter(user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]);
     }
   }
 };

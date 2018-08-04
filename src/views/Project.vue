@@ -85,8 +85,7 @@ export default {
       this.users = data.users.map(user => {
         return {
           ...user,
-          isChecked:
-            this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
+          isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
         };
       });
 

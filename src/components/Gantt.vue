@@ -67,23 +67,18 @@ export default {
       return moment.monthsShort();
     },
     currentDate() {
-      if(this.date) {
+      if (this.date) {
         return moment(this.date);
       }
       return moment();
     },
     allUsers() {
-      const users = this.users.filter(user =>
-        new RegExp(this.search.toLowerCase(), 'g').test(user.name.toLowerCase())
-      );
+      const users = this.users.filter(user => new RegExp(this.search.toLowerCase(), 'g').test(user.name.toLowerCase()));
 
       return users.map(user => ({
         ...user,
         maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user),
-        projects: this.projects.filter(
-          project =>
-            project.users.filter(pUser => pUser.name === user.name).length > 0
-        )
+        projects: this.projects.filter(project => project.users.filter(pUser => pUser.name === user.name).length > 0)
       }));
     },
     currentYear() {
@@ -95,9 +90,7 @@ export default {
       const userProjects = this.projectsByUser(user);
 
       const concurrentProjects = userProjects.map(
-        project =>
-          userProjects.filter(data => project.dateStart.within(data.range))
-            .length
+        project => userProjects.filter(data => project.dateStart.within(data.range)).length
       );
 
       return concurrentProjects.length ? Math.max(...concurrentProjects) : 0;
@@ -129,10 +122,7 @@ export default {
         return 'left';
       } else if (startYear < this.currentYear && endYear > this.currentYear) {
         return 'expand';
-      } else if (
-        startYear === this.currentYear &&
-        endYear === this.currentYear
-      ) {
+      } else if (startYear === this.currentYear && endYear === this.currentYear) {
         return 'same';
       }
       return 'hidden';
@@ -277,8 +267,7 @@ export default {
           border-radius: 6px 0 0 6px;
         }
         &.expand {
-          box-shadow: inset 9px 0 10px -10px rgba(0, 0, 0, 0.8),
-            inset -9px 0 10px -10px rgba(0, 0, 0, 0.8);
+          box-shadow: inset 9px 0 10px -10px rgba(0, 0, 0, 0.8), inset -9px 0 10px -10px rgba(0, 0, 0, 0.8);
           border-radius: 0;
         }
         &.hidden {
