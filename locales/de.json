@@ -1,0 +1,27 @@
+{
+  "edit": "Editieren",
+  "save": "Speichern",
+  "search": "Suche",
+  "back": "Zurück",
+  "color": "Farbe",
+  "from": "Von",
+  "to": "Zu",
+  "month": "Monat | Monate",
+  "parallel": "Parallel",
+  "project": {
+    "self": "Projekt | Projekte",
+    "amount-parallel": "{amount} parallele Projekte",
+    "name": "Projekt Name",
+    "add": "Projekt hinzufügen",
+    "new": "Neues Projekt",
+    "nothing": "Es sind noch keine Projekte angelegt worden",
+    "who-is-there": "Wer ist dabei?",
+    "time-beam": "Zeitstrahl",
+    "edit-with-name": "Projekt \"{name}\" editieren"
+  },
+  "notifications": {
+    "to-many-projects": "Diese Person hat zu viele parallele Projekte in diesem Zeitraum",
+    "project-created": "Projekt erfolgreich hinzugefügt",
+    "project-edited": "Projekt erfolgreich aktualisiert"
+  }
+}

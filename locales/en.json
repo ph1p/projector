@@ -1,0 +1,28 @@
+{
+  "edit": "Edit",
+  "save": "Save",
+  "search": "Search",
+  "back": "Back",
+  "color": "Color",
+  "from": "From",
+  "to": "To",
+  "month": "Month | Months",
+  "parallel": "Parallel",
+  "project": {
+    "self": "Project | Projects",
+    "amountParallel": "{amount} parallel Projects",
+    "name": "Project Name",
+    "add": "Add project",
+    "new": "New Project",
+    "nothing": "There are currently no projects",
+    "who-is-there": "Who is there?",
+    "time-allocation": "Time allocation",
+    "time-beam": "Time beam",
+    "edit-with-name": "Edit \"{name}\""
+  },
+  "notifications": {
+    "to-many-projects": "This person has too many parallel projects during this period",
+    "project-created": "Project successfully added",
+    "project-edited": "Project successfully edited"
+  }
+}
