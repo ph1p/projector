@@ -10,20 +10,20 @@
     </div>
 
     <div class="gantt">
-        <div class="row months">
-          <div class="first-column">{{ $tc('month') }}</div>
+        <div class="gantt__row gantt__row--months">
+          <div class="gantt__row-first"></div>
           <span v-for="name in shortMonthNames" :key="name">{{name}}</span>
         </div>
-        <div class="row lines">
+        <div class="gantt__row gantt__row--lines">
           <span v-for="name in shortMonthNames" :key="name +'line'"></span>
         </div>
 
-        <div class="row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'empty' : ''" >
-          <div class="first-column">
+        <div class="gantt__row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'empty' : ''" >
+          <div class="gantt__row-first">
             {{user.name}}
             <p>{{ $tc('project.self', user.projects.length) }} {{user.projects.length}} ({{$t('parallel')}}: {{user.maxConcurrentProjects}})</p>
           </div>
-          <ul class="projects">
+          <ul class="gantt__row-bars">
             <li
             @click="$router.push(`/project/edit/${project.id}`)"
             v-for="(project, index) in user.projects"
@@ -178,82 +178,122 @@ export default {
     }
   }
 }
+
+
+.wrapper {
+  width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+}
 .gantt {
   display: grid;
+  border: 0;
   border: 1px solid #ddd;
+  border-radius: 12px;
   position: relative;
-  .row {
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &__row {
     display: grid;
     grid-template-columns: 150px 1fr;
-    &:nth-child(even) {
+    background-color: #fff;
+    &:nth-child(odd) {
       background-color: #f5f5f5;
-      .first-column {
+      .gantt__row-first {
         background-color: #f5f5f5;
       }
     }
     &:nth-child(3) {
-      .projects {
+      .gantt__row-bars {
+        border-top: 0;
+      }
+      .gantt__row-first {
         border-top: 0;
       }
     }
-    &.empty {
-      background-color: rgb(238, 142, 142);
+    &--empty {
+      background-color: lighten(#ff6252, 25%) !important;
+      z-index: 1;
+      .gantt__row-first {
+        border-width: 1px 1px 0 0;
+      }
     }
-    &.lines {
+    &--lines {
       position: absolute;
       height: 100%;
       width: 100%;
       background-color: transparent;
       grid-template-columns: 150px repeat(12, 1fr);
-      .first-column {
-        background-color: transparent;
-      }
       span {
-        border-right: 1px solid rgba(221, 221, 221, 0.8);
+        display: block;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        &.marker {
+          background-color: rgba(10, 52, 68, 0.13);
+          z-index: 2;
+        }
+      }
+      &:after {
+        grid-row: 1;
+        grid-column: 0;
+        background-color: #1688b345;
+        z-index: 2;
+        height: 100%;
       }
     }
-    &.months {
-      background-color: #eee;
-      border-bottom: 1px solid #ddd;
+    &--months {
+      color: #fff;
+      background-color: #0a3444 !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       grid-template-columns: 150px repeat(12, 1fr);
+      .gantt__row-first {
+        border-top: 0 !important;
+        background-color: #0a3444 !important;
+      }
       span {
         text-align: center;
-        font-size: 12px;
+        font-size: 13px;
         align-self: center;
         font-weight: bold;
+        padding: 20px 0;
       }
     }
-    .first-column {
-      background-color: #eee;
-      border-right: 1px solid #ddd;
-      padding: 5px;
-      font-size: 12px;
+    &-first {
+      background-color: #fff;
+      border-width: 1px 0 0 0;
+      border-color: rgba(0, 0, 0, 0.1);
+      border-style: solid;
+      padding: 15px 15px;
+      font-size: 13px;
       font-weight: bold;
+      text-align: left;
       p {
         margin: 0;
         font-weight: normal;
         font-size: 11px;
       }
     }
-    .projects {
+    &-bars {
       list-style: none;
       display: grid;
+      padding: 9px 0;
       margin: 0;
-      padding: 0;
       grid-template-columns: repeat(12, 1fr);
-      grid-gap: 10px 0;
+      grid-gap: 8px 0;
       border-top: 1px solid rgba(221, 221, 221, 0.8);
-      padding: 10px 0;
       li {
-        text-align: center;
-        font-size: 13px;
-        height: 15px;
+        font-weight: 500;
+        text-align: left;
+        font-size: 14px;
+        max-height: 15px;
         background-color: #55de84;
-        border-radius: 6px;
+        padding: 5px 12px;
         color: #fff;
         overflow: hidden;
         position: relative;
         cursor: pointer;
+        border-radius: 20px;
+
         &.highlight {
           opacity: 1;
         }
@@ -275,10 +315,30 @@ export default {
         &.hidden {
           visibility: hidden;
         }
-        span {
-          position: absolute;
-          left: 0;
+        &.stripes {
+          background-image: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 5px,
+            rgba(255, 255, 255, 0.1) 5px,
+            rgba(255, 255, 255, 0.1) 12px
+          );
+        }
+
+        &:before,
+        &:after {
+          content: '';
+          height: 100%;
           top: 0;
+          z-index: 4;
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+        &:before {
+          left: 0;
+        }
+        &:after {
+          right: 0;
         }
       }
     }
