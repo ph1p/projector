@@ -39,7 +39,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #3a3a3a;
+  background-color: #0a3444;
   z-index: 99;
   .navigation {
     margin: 0 auto;
@@ -59,7 +59,7 @@ export default {
       transition: background-color 0.1s ease-in-out;
       &:hover,
       &.active {
-        background-color: #464646;
+        background-color: lighten(#0a3444, 5%);
       }
       &--languages {
         text-align: right;

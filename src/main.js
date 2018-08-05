@@ -12,7 +12,11 @@ import './registerServiceWorker';
 Vue.config.productionTip = false;
 
 Vue.use(VTooltip);
-Vue.use(Snotify);
+Vue.use(Snotify, {
+  toast: {
+    timeout: 5000
+  }
+});
 Vue.use(VueI18n);
 
 const locales = require.context('../locales', true, /^\.\/.*\.json$/);
