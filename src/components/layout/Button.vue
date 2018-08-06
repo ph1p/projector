@@ -57,6 +57,13 @@ export default {
       background-color: lighten(#17ab68, 4%);
     }
   }
+  &.dark {
+    background-color: #0a3444;
+    color: #fff;
+    &:hover {
+      background-color: lighten(#0a3444, 4%);
+    }
+  }
   &.normal {
     background-color: #e8e8e8;
     color: #909090;
