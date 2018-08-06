@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="wrapper">
     <h3>{{$t('project.new')}}</h3>
 
     <div class="form" v-if="localProject">

@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-if="storeProject">
+  <div class="wrapper" v-if="storeProject">
     <h3>{{$tc('project.self')}} "{{project.name}}"</h3>
 
     <div class="form">
@@ -26,14 +26,19 @@
       </div>
     </div>
 
-    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
-    <UnitList :users="checkedUsers" />
+    <hr />
 
-    <h3 v-if="checkedUsers.length">{{$t('project.time-beam')}}</h3>
+    <h3 v-if="storeProject.users.length">{{$t('project.who-is-there')}}</h3>
+    <UnitList :users="storeProject.users" />
+
+    <hr />
+
+    <h3 v-if="storeProject.users.length">{{$t('project.time-beam')}}</h3>
     <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="storeProject.users" />
 
     <div class="btn-group">
       <Button to="/" type="normal">{{$t('back')}}</Button>
+      <Button :to="`/presentation/${currentProjectId}`" type="dark">{{$t('presentation')}}</Button>
       <Button :to="`/project/edit/${currentProjectId}`" type="success">{{$t('edit')}}</Button>
     </div>
   </div>
@@ -69,9 +74,6 @@ export default {
   },
   computed: {
     ...mapGetters(['projects', 'projectById']),
-    checkedUsers() {
-      return this.users.filter(user => user.isChecked);
-    },
     currentProjectId() {
       return parseInt(this.$route.params.id, 0);
     },
@@ -112,7 +114,7 @@ export default {
 <style scoped lang="scss">
 .btn-group {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 30px;
 }
 .form {

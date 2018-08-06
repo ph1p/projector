@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <h3 v-if="projects.length">{{$tc('project.self', 2)}}</h3>
 
     <ul class="projects" v-if="projects.length">
@@ -12,11 +12,11 @@
 
 
 
-    <h3 v-if="projects.length">Aufteilung der Projekte</h3>
+    <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
     <Gantt :users="usersInUnit([1,2,3,4,5,6])" />
     <hr />
 
-    <h3 v-if="projects.length">Projekt in diesem Jahre (Projekt-Manager)</h3>
+    <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
     <Gantt :users="usersInUnit([5])" />
   </div>
 </template>

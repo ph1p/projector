@@ -1,59 +1,61 @@
 <template>
-  <div class="home" v-if="storeProject">
-    <h3>{{$t('project.edit-with-name', { name: project.name })}}</h3>
+  <div class="wrapper">
+    <div class="home" v-if="storeProject">
+      <h3>{{$t('project.edit-with-name', { name: project.name })}}</h3>
 
-    <div class="form">
+      <div class="form">
 
-      <div class="form-field">
-        <strong>{{$t('project.name')}}:</strong>
-        <input v-model="project.name" type="text">
-      </div>
+        <div class="form-field">
+          <strong>{{$t('project.name')}}:</strong>
+          <input v-model="project.name" type="text">
+        </div>
 
-      <div class="form-field">
-        <strong>{{$t('from')}}:</strong>
-        <datepicker v-model="project.dateStart"></datepicker>
-      </div>
+        <div class="form-field">
+          <strong>{{$t('from')}}:</strong>
+          <datepicker v-model="project.dateStart"></datepicker>
+        </div>
 
-      <div class="form-field">
-        <strong>{{$t('to')}}:</strong>
-        <datepicker v-model="project.dateEnd"></datepicker>
-      </div>
+        <div class="form-field">
+          <strong>{{$t('to')}}:</strong>
+          <datepicker v-model="project.dateEnd"></datepicker>
+        </div>
 
-      <div class="form-field">
-        <strong>{{$t('color')}}:</strong>
-        <div class="color">
-          <div class="color__preview" :style="{backgroundColor: project.color}" @click="isColorPickerOpen = !isColorPickerOpen;"></div>
-          <color-picker class="color__picker" v-if="isColorPickerOpen" v-model="inputColor"></color-picker>
+        <div class="form-field">
+          <strong>{{$t('color')}}:</strong>
+          <div class="color">
+            <div class="color__preview" :style="{backgroundColor: project.color}" @click="isColorPickerOpen = !isColorPickerOpen;"></div>
+            <color-picker class="color__picker" v-if="isColorPickerOpen" v-model="inputColor"></color-picker>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="user-lists">
-      <div>
-        <h3>PM-Team</h3>
-        <UserList :users="usersInUnit([5])"
-          :toggleChecked="toggleChecked"
-        />
+      <div class="user-lists">
+        <div>
+          <h3>PM-Team</h3>
+          <UserList :users="usersInUnit([5])"
+            :toggleChecked="toggleChecked"
+          />
+        </div>
+        <div>
+          <h3>Dev-Team</h3>
+          <UserList :users="usersInUnit([1,2,3,4,6])"
+            :toggleChecked="toggleChecked"
+          />
+        </div>
       </div>
-      <div>
-        <h3>Dev-Team</h3>
-        <UserList :users="usersInUnit([1,2,3,4,6])"
-          :toggleChecked="toggleChecked"
-        />
+
+      <hr>
+
+      <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+      <UnitList :users="checkedUsers" />
+
+      <hr>
+      <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="storeProject.users" />
+
+      <div class="btn-group">
+        <Button to="/" type="normal">{{$t('back')}}</Button>
+        <Button @click.native="update" type="success">{{$t('save')}}</Button>
       </div>
-    </div>
-
-    <hr>
-
-    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
-    <UnitList :users="checkedUsers" />
-
-    <hr>
-    <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="storeProject.users" />
-
-    <div class="btn-group">
-      <Button to="/" type="normal">{{$t('back')}}</Button>
-      <Button @click.native="update" type="success">{{$t('save')}}</Button>
     </div>
   </div>
 </template>

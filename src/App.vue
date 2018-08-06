@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <vue-snotify></vue-snotify>
-    <Navigation />
+    <Navigation v-if="!hideNavigation" />
     <router-view/>
   </div>
 </template>
@@ -13,12 +13,20 @@ export default {
   name: 'app',
   components: {
     Navigation
+  },
+  computed: {
+    hideNavigation() {
+      return this.$route.meta.hideNavigation;
+    }
   }
 };
 </script>
 
 <style lang="scss">
 @import '~vue-snotify/styles/material';
+body {
+  margin: 0;
+}
 * {
   box-sizing: border-box;
 }
@@ -39,6 +47,8 @@ input {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.wrapper {
   margin: 102px auto 40px;
   width: 900px;
 }
