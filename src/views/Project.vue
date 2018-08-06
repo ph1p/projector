@@ -20,7 +20,9 @@
 
       <div class="form-field">
         <strong>{{$t('color')}}:</strong>
-        <span class="color" :style="{backgroundColor: project.color}"></span>
+        <div class="color">
+          <div class="color__preview" :style="{backgroundColor: project.color}"></div>
+        </div>
       </div>
     </div>
 
@@ -120,10 +122,18 @@ export default {
   .form-field {
     margin-bottom: 20px;
     .color {
-      width: 40px;
-      height: 15px;
-      margin-left: 10px;
+      position: relative;
+      border: 1px solid #999;
+      border-radius: 100%;
+      box-sizing: border-box;
+      padding: 4px;
+      margin: -10px 0 -12px 5px;
       display: inline-block;
+      &__preview {
+        border-radius: 100%;
+        width: 25px;
+        height: 25px;
+      }
     }
   }
 }
