@@ -25,12 +25,12 @@
           </div>
           <ul class="gantt__row-bars">
             <li
-            @click="$router.push(`/project/edit/${project.id}`)"
+            @click="$router.push(`/project/${project.id}`)"
             v-for="(project, index) in user.projects"
             v-tooltip="project.name"
             :key="project.id"
             :class="[getDirection(project.dateStart, project.dateEnd), highlightClass(project)]"
-            :style="getGridStyle(project, index)"></li>
+            :style="getGridStyle(project, index)"><span>{{project.name}}</span></li>
           </ul>
         </div>
     </div>
@@ -179,7 +179,6 @@ export default {
   }
 }
 
-
 .wrapper {
   width: 800px;
   margin: 0 auto;
@@ -284,8 +283,8 @@ export default {
       li {
         font-weight: 500;
         text-align: left;
-        font-size: 14px;
-        max-height: 15px;
+        font-size: 12px;
+        height: 25px;
         background-color: #55de84;
         padding: 5px 12px;
         color: #fff;
@@ -293,6 +292,10 @@ export default {
         position: relative;
         cursor: pointer;
         border-radius: 20px;
+        span {
+          overflow: hidden;
+          display: block;
+        }
 
         &.highlight {
           opacity: 1;
