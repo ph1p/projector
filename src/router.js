@@ -2,8 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 const Project = () => import(/* webpackChunkName: "project" */ './views/Project.vue');
-const NewProject = () => import(/* webpackChunkName: "project" */ './views/NewProject.vue');
-const EditProject = () => import(/* webpackChunkName: "project" */ './views/EditProject.vue');
+const NewProject = () => import(/* webpackChunkName: "new-project" */ './views/NewProject.vue');
+const EditProject = () => import(/* webpackChunkName: "edit-project" */ './views/EditProject.vue');
+const ProjectPresentation = () => import(/* webpackChunkName: "project-presentation" */ './views/ProjectPresentation.vue');
+const Presentation = () => import(/* webpackChunkName: "presentation" */ './views/Presentation.vue');
 
 Vue.use(Router);
 
@@ -15,14 +17,30 @@ export default new Router({
       component: Home
     },
     {
-      path: '/project/:id',
+      path: '/project/:id(\\d+)',
       name: 'project',
       component: Project
     },
     {
-      path: '/project/edit/:id',
+      path: '/project/edit/:id(\\d+)',
       name: 'edit-project',
       component: EditProject
+    },
+    {
+      path: '/presentation',
+      name: 'presentation',
+      component: Presentation,
+      meta: {
+        hideNavigation: true
+      }
+    },
+    {
+      path: '/presentation/:id(\\d+)',
+      name: 'project-presentation',
+      component: ProjectPresentation,
+      meta: {
+        hideNavigation: true
+      }
     },
     {
       path: '/newProject',

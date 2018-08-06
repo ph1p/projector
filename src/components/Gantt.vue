@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="header">
+  <div v-if="allUsers">
+    <div v-if="!disableHeader" class="header">
       <div class="navigation">
       <span @click="previousYear"><</span>
       <span @click="years = 0">{{currentYear}}</span>
@@ -10,30 +10,34 @@
     </div>
 
     <div class="gantt">
-        <div class="gantt__row gantt__row--months">
-          <div class="gantt__row-first"></div>
-          <span v-for="name in shortMonthNames" :key="name">{{name}}</span>
-        </div>
-        <div class="gantt__row gantt__row--lines">
-          <span v-for="name in shortMonthNames" :key="name +'line'"></span>
-        </div>
+      <div class="gantt__row gantt__row--months">
+        <div class="gantt__row-first"></div>
+        <span v-for="name in shortMonthNames" :key="name">{{name}}</span>
+      </div>
+      <div class="gantt__row gantt__row--lines">
+        <span v-for="name in shortMonthNames" :key="name +'line'"></span>
+      </div>
 
-        <div class="gantt__row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'empty' : ''" >
-          <div class="gantt__row-first">
-            {{user.name}}
-            <p>{{ $tc('project.self', user.projects.length) }} {{user.projects.length}} ({{$t('parallel')}}: {{user.maxConcurrentProjects}})</p>
-          </div>
-          <ul class="gantt__row-bars">
-            <li
-            @click="$router.push(`/project/${project.id}`)"
-            v-for="(project, index) in user.projects"
-            v-tooltip="project.name"
-            :key="project.id"
-            :class="[getDirection(project.dateStart, project.dateEnd), highlightClass(project)]"
-            :style="getGridStyle(project, index)"><span>{{project.name}}</span></li>
-          </ul>
+      <div class="gantt__row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'gantt__row--empty' : ''" >
+        <div class="gantt__row-first">
+          {{user.name}}
+          <p v-if="user.projects.length > 1">{{ $tc('project.self', user.projects.length) }} {{user.projects.length}} ({{$t('parallel')}}: {{user.maxConcurrentProjects}})</p>
         </div>
+        <ul class="gantt__row-bars">
+          <li
+          @click="$router.push(`/project/${project.id}`)"
+          v-for="(project, index) in user.projects"
+          v-tooltip="project.name"
+          :key="project.id"
+          :class="[getDirection(project.dateStart, project.dateEnd), highlightClass(project)]"
+          :style="getGridStyle(project, index)"><span>{{project.name}}</span></li>
+        </ul>
+      </div>
     </div>
+
+    <i18n path="pagination" tag="div" v-if="showPagination" class="pagination">
+      <strong>{{pages}}</strong>{{pageLimit}}
+    </i18n>
   </div>
 </template>
 
@@ -54,6 +58,22 @@ export default {
     date: {
       type: String,
       default: ''
+    },
+    disableHeader: {
+      type: Boolean,
+      default: false
+    },
+    showPagination: {
+      type: Boolean,
+      default: false
+    },
+    start: {
+      type: Number,
+      default: -1
+    },
+    limit: {
+      type: Number,
+      default: -1
     }
   },
   data() {
@@ -67,20 +87,37 @@ export default {
     shortMonthNames() {
       return moment.monthsShort();
     },
+    pages() {
+      return Math.ceil(this.start / this.limit) + 1;
+    },
+    pageLimit() {
+      return Math.ceil(this.users.length / this.limit);
+    },
     currentDate() {
       if (this.date) {
         return moment(this.date);
       }
       return moment();
     },
+    limitEnd() {
+      return this.start + this.limit;
+    },
     allUsers() {
-      const users = this.users.filter(user => new RegExp(this.search.toLowerCase(), 'g').test(user.name.toLowerCase()));
-
-      return users.map(user => ({
-        ...user,
-        maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user),
-        projects: this.projects.filter(project => project.users.filter(pUser => pUser.name === user.name).length > 0)
-      }));
+      return (
+        this.users
+          // search filter
+          .filter(user => new RegExp(this.search.toLowerCase(), 'g').test(user.name.toLowerCase()))
+          // map through each user
+          .map(user => ({
+            ...user,
+            maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user),
+            projects: this.projects.filter(
+              project => project.users.filter(pUser => pUser.name === user.name).length > 0
+            )
+          }))
+          // filter user if limiters are passed
+          .filter((u, k) => (this.start < 0 || k >= this.start) && (this.limitEnd < 0 || k < this.limitEnd))
+      );
     },
     currentYear() {
       return parseInt(this.currentDate.format('YYYY'), 0) + this.years;
@@ -96,7 +133,6 @@ export default {
 
       return concurrentProjects.length ? Math.max(...concurrentProjects) : 0;
     },
-
     nextYear() {
       this.years += 1;
     },
@@ -179,10 +215,13 @@ export default {
   }
 }
 
-.wrapper {
-  width: 800px;
-  margin: 0 auto;
-  padding: 40px;
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+  span {
+    font-weight: bold;
+    display: inline-block;
+  }
 }
 .gantt {
   display: grid;
@@ -192,7 +231,6 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-
   &__row {
     display: grid;
     grid-template-columns: 150px 1fr;
@@ -302,6 +340,7 @@ export default {
         }
         &.lowlight {
           background-color: #ddd !important;
+          color: #2c3e50;
         }
         &.left {
           box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, 0.8);

@@ -8,6 +8,8 @@
   "to": "To",
   "month": "Month | Months",
   "parallel": "Parallel",
+  "presentation": "Presentation",
+  "pagination": "{0} of {1}",
   "project": {
     "self": "Project | Projects",
     "amount-parallel": "{amount} parallel Projects",
