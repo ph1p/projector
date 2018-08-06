@@ -12,13 +12,13 @@ export default {
   },
   mutations: {
     update(state, project) {
-      const newProject = {
+      const updatedProject = {
         ...project,
         dateStart: project.dateStart,
-        dateEnd: project.dateEnd
+        dateEnd: project.dateEnd,
       };
 
-      state.data = [...state.data.filter(p => project.id !== p.id), newProject];
+      state.data = state.data.map(p => project.id === p.id ? updatedProject : p);
     },
     add(state, project) {
       const newProject = {
