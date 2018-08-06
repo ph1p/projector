@@ -1,5 +1,16 @@
+<a name="0.3.0"></a>
+# [0.3.0](/compare/v0.2.0...v0.3.0) (2018-08-06)
+
+
+### Features
+
+* **navigation:** add ability to hide navigation 42d513f
+* **presentation:** add presentation mode to display chart on tvs or something 6f9fbe1
+
+
+
 <a name="0.2.0"></a>
-# 0.2.0 (2018-08-06)
+# [0.2.0](/compare/3867709...v0.2.0) (2018-08-06)
 
 
 ### Bug Fixes
