@@ -62,6 +62,9 @@ export default {
     UnitList,
     Gantt
   },
+  watch: {
+    '$route.params.id': 'init'
+  },
   computed: {
     ...mapGetters(['projects', 'projectById']),
     checkedUsers() {
@@ -77,25 +80,29 @@ export default {
       return moment(this.project.dateEnd).format('DD.MM.YYYY');
     }
   },
-  methods: {},
-  created() {
-    this.storeProject = this.projectById(this.$route.params.id);
+  methods: {
+    init() {
+      this.storeProject = this.projectById(this.$route.params.id);
 
-    if (this.storeProject) {
-      this.users = data.users.map(user => {
-        return {
-          ...user,
-          isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
+      if (this.storeProject) {
+        this.users = data.users.map(user => {
+          return {
+            ...user,
+            isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
+          };
+        });
+
+        this.project = {
+          ...this.storeProject,
+          users: orderBy(this.checkedUsers, 'name', 'asc')
         };
-      });
-
-      this.project = {
-        ...this.storeProject,
-        users: orderBy(this.checkedUsers, 'name', 'asc')
-      };
-    } else {
-      this.$router.replace('/');
+      } else {
+        this.$router.replace('/');
+      }
     }
+  },
+  created() {
+    this.init();
   }
 };
 </script>

@@ -120,7 +120,7 @@ export default {
         ...this.localProject,
         users: this.checkedUsers
       });
-      this.$snotify.success(this.$t('notifications.project-added'));
+      this.$snotify.success(this.$t('notifications.project-created'));
     },
     findUserById(id) {
       return this.localUsers.filter(user => user.id === id)[0] || {};

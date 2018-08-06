@@ -105,8 +105,30 @@ export default {
       return parseInt(this.$route.params.id, 0);
     }
   },
+  watch: {
+    '$route.params.id': 'init'
+  },
   methods: {
     ...mapActions(['updateProject']),
+    init() {
+      this.storeProject = this.projectById(this.$route.params.id);
+
+      if (this.storeProject) {
+        this.users = data.users.map(user => {
+          return {
+            ...user,
+            isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id).length > 0
+          };
+        });
+
+        this.project = {
+          ...this.storeProject,
+          users: orderBy(this.checkedUsers, 'name', 'asc')
+        };
+      } else {
+        this.$router.replace('/');
+      }
+    },
     update() {
       this.updateProject({
         ...this.project,
@@ -133,23 +155,7 @@ export default {
     }
   },
   created() {
-    this.storeProject = this.projectById(this.$route.params.id);
-
-    if (this.storeProject) {
-      this.users = data.users.map(user => {
-        return {
-          ...user,
-          isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id).length > 0
-        };
-      });
-
-      this.project = {
-        ...this.storeProject,
-        users: orderBy(this.checkedUsers, 'name', 'asc')
-      };
-    } else {
-      this.$router.replace('/');
-    }
+    this.init();
   }
 };
 </script>
