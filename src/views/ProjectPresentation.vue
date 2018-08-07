@@ -114,5 +114,6 @@ export default {
 .gantt {
   border: 0 !important;
   color: #2c3e50;
+  grid-template-rows: 58px;
 }
 </style>

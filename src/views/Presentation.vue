@@ -80,5 +80,7 @@ export default {
 .gantt {
   border: 0 !important;
   color: #2c3e50;
+  height: calc(100vh - 136px);
+  grid-template-rows: 58px;
 }
 </style>
