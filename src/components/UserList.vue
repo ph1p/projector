@@ -1,21 +1,31 @@
 <template>
   <div class="users">
-    <div class="user-search">
-      <input type="text" :placeholder="`${$t('search')}...`" v-model="searchTerm">
+    <div class="header">
+      <div class="user-search">
+        <input type="text" :placeholder="`${$t('search')}...`" v-model="searchTerm">
+      </div>
+
+      <div class="user-unit-select">
+        <select name="blendingMode" v-model="selectedUnit" class="filter__blending-mode">
+          <option value="" :selected="!selectedUnit">{{$t('select-unit')}}</option>
+          <option v-for="unit in units" :key="unit.name" :value="unit.id" :selected="unit.id === selectedUnit">{{unit.name}}</option>
+        </select>
+      </div>
     </div>
+
+
     <ul class="users-list">
-      <li v-for="user in allUsers" :class="user.isChecked ? 'active': ''" :key="user.name" @click="toggleChecked(user.id, user.maxConcurrentProjects)">
+      <li v-for="user in allUsers" :class="user.isChecked ? 'active': ''" :key="user.name" @click="toggleChecked(user.id, user.concurrentProjectsByProject)">
       <div class="user">
           <div class="unit-identifier">
-              <span :style="{backgroundColor: user.unit.color}"></span>
+            <span :style="{backgroundColor: user.unit.color}"></span>
           </div>
           <div class="user-info">
           {{user.name}}<span>{{user.position.name}}</span>
 
-          <div class="caution" v-if="user.maxConcurrentProjects >= maxConcurrentProjectsPerUser">!</div>
-
+          <div class="caution" v-if="user.concurrentProjectsByProject >= maxConcurrentProjectsPerUser">!</div>
           <p>
-            {{$t('project.amount-parallel', { amount: user.maxConcurrentProjects })}}
+            {{$t('project.amount-parallel', { amount: user.concurrentProjectsByProject })}}
           </p>
           </div>
       </div>
@@ -30,6 +40,7 @@ import find from 'lodash/find';
 import groupBy from 'lodash/groupBy';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import data from '../data';
 
 const moment = extendMoment(Moment);
 
@@ -37,43 +48,70 @@ export default {
   name: 'UserList',
   data() {
     return {
-      searchTerm: ''
+      searchTerm: '',
+      units: data.units,
+      selectedUnit: ''
     };
   },
   props: {
     users: Array,
-    toggleChecked: Function
+    toggleChecked: Function,
+    project: Object
   },
   computed: {
     ...mapGetters(['projects', 'projectsByUser', 'maxConcurrentProjectsPerUser']),
+    startDate() {
+      return this.project.dateStart ? moment(this.project.dateStart) : false;
+    },
+    endDate() {
+      return this.project.dateEnd ? moment(this.project.dateEnd) : false;
+    },
     allUsers() {
       return this.users
         .filter(user => user.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
-        .map(user => ({
-          ...user,
-          maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user)
-        }));
-    }
-  },
-  methods: {
-    getUsersMaxConcurrentProjects(user) {
-      const userProjects = this.projectsByUser(user);
+        .filter(user => {
+          if (this.selectedUnit) {
+            if (this.selectedUnit === user.unit.id) {
+              return user;
+            }
+          } else {
+            return user;
+          }
+        })
+        .map(user => {
+          const userProjects = this.projectsByUser(user);
 
-      const concurrentProjects = userProjects.map(
-        project => userProjects.filter(data => project.dateStart.within(data.range)).length
-      );
+          const concurrentProjectsByProject = userProjects.filter(
+              project => project.id !== this.project.id ? project.range.contains(this.startDate) || project.range.contains(this.endDate) : false
+            ).length;
 
-      return concurrentProjects.length ? Math.max(...concurrentProjects) : 0;
+          if(concurrentProjectsByProject >= this.maxConcurrentProjectsPerUser) {
+            user.isChecked = false;
+          }
+
+          return {
+            ...user,
+            concurrentProjectsByProject
+          };
+        });
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 
 <style scoped lang="scss">
 .users {
-  .user-search {
-    margin: 0 0 20px 0;
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    select {
+      height: 100%;
+    }
+    .user-search,
+    .user-unit-select {
+      margin: 0 0 20px 0;
+    }
   }
   &-list {
     list-style: none;

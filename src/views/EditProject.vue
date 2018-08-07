@@ -30,18 +30,11 @@
       </div>
 
       <div class="user-lists">
-        <div>
-          <h3>PM-Team</h3>
-          <UserList :users="usersInUnit([5])"
-            :toggleChecked="toggleChecked"
-          />
-        </div>
-        <div>
-          <h3>Dev-Team</h3>
-          <UserList :users="usersInUnit([1,2,3,4,6])"
-            :toggleChecked="toggleChecked"
-          />
-        </div>
+        <UserList
+          :project="project"
+          :users="users"
+          :toggleChecked="toggleChecked"
+        />
       </div>
 
       <hr>
@@ -86,6 +79,7 @@ export default {
     };
   },
   watch: {
+    '$route.params.id': 'init',
     inputColor(value) {
       this.project.color = value.hex;
     }
@@ -106,9 +100,6 @@ export default {
     currentProjectId() {
       return parseInt(this.$route.params.id, 0);
     }
-  },
-  watch: {
-    '$route.params.id': 'init'
   },
   methods: {
     ...mapActions(['updateProject']),
@@ -170,7 +161,7 @@ export default {
 }
 .user-lists {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 30px;
 }
 .form {
