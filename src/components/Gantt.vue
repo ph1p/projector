@@ -250,7 +250,8 @@ export default {
       }
     }
     &--empty {
-      background-color: lighten(#ff6252, 25%) !important;
+      background-color: lighten(#999, 25%) !important;
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,.1) 3px, rgba(255,255,255,.1) 8px);
       z-index: 1;
       .gantt__row-first {
         border-width: 1px 1px 0 0;
