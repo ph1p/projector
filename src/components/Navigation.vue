@@ -12,8 +12,8 @@
       </router-link>
       <div class="navigation__item navigation__item--languages">
         <select name="language" v-model="language">
-          <option value="en">en</option>
-          <option value="de">de</option>
+          <option value="en" :selected="currentLanguage === 'en'">en</option>
+          <option value="de" :selected="currentLanguage === 'de'">de</option>
         </select>
       </div>
     </nav>
@@ -21,17 +21,28 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'Navigation',
   data() {
     return {
-      language: 'en'
+      language: this.$store.getters.language
     };
   },
   watch: {
     language(lang) {
+      this.setLanguage(lang);
       this.$i18n.locale = lang;
     }
+  },
+  computed: {
+    currentLanguage() {
+      return this.$store.getters.language;
+    }
+  },
+  methods: {
+    ...mapMutations(['setLanguage'])
   }
 };
 </script>
@@ -67,6 +78,7 @@ export default {
       &--languages {
         text-align: right;
         select {
+          width: 42px;
           background-color: #fff;
           font-size: 12px;
           padding: 0 10px;

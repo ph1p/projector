@@ -18,6 +18,9 @@ export default {
     hideNavigation() {
       return this.$route.meta.hideNavigation;
     }
+  },
+  created() {
+    this.$i18n.locale = this.$store.getters.language;
   }
 };
 </script>
@@ -35,12 +38,16 @@ hr {
   border-color: #ddd;
   margin: 30px 0;
 }
-input {
+input,
+select {
   width: 100%;
   font-size: 14px;
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
+}
+select {
+  padding: 20px;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
