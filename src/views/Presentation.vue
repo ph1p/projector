@@ -30,7 +30,6 @@ export default {
     };
   },
   components: {
-    UnitList,
     Gantt
   },
   computed: {
