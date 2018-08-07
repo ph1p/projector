@@ -29,20 +29,11 @@
     </div>
 
     <div class="user-lists">
-      <div>
-        <h3>PM-Team</h3>
-        <UserList
-          :users="usersInUnit([5])"
-          :toggleChecked="toggleChecked"
-        />
-      </div>
-      <div>
-        <h3>Dev-Team</h3>
-        <UserList
-          :users="usersInUnit([1,2,3,4,6])"
-          :toggleChecked="toggleChecked"
-        />
-      </div>
+      <UserList
+        :project="localProject"
+        :users="localUsers"
+        :toggleChecked="toggleChecked"
+      />
     </div>
 
     <h3 v-if="checkedUsers.length">Wer ist dabei?</h3>
@@ -121,6 +112,7 @@ export default {
         users: this.checkedUsers
       });
       this.$snotify.success(this.$t('notifications.project-created'));
+      this.$router.push('/');
     },
     findUserById(id) {
       return this.localUsers.filter(user => user.id === id)[0] || {};
@@ -155,7 +147,7 @@ export default {
 }
 .user-lists {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 30px;
 }
 .form {

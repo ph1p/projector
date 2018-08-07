@@ -21,7 +21,7 @@
       <div class="gantt__row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'gantt__row--empty' : ''" >
         <div class="gantt__row-first">
           {{user.name}}
-          <p v-if="user.projects.length > 1">{{ $tc('project.self', user.projects.length) }} {{user.projects.length}} ({{$t('parallel')}}: {{user.maxConcurrentProjects}})</p>
+          <p v-if="user.projects.length > 1">{{ $tc('project.self', user.projects.length) }} {{user.projects.length}}</p>
         </div>
         <ul class="gantt__row-bars">
           <li
@@ -82,6 +82,11 @@ export default {
       search: ''
     };
   },
+  watch: {
+    users() {
+      this.years = 0;
+    }
+  },
   computed: {
     ...mapGetters(['projects', 'projectsByUser']),
     shortMonthNames() {
@@ -110,7 +115,6 @@ export default {
           // map through each user
           .map(user => ({
             ...user,
-            maxConcurrentProjects: this.getUsersMaxConcurrentProjects(user),
             projects: this.projects.filter(
               project => project.users.filter(pUser => pUser.name === user.name).length > 0
             )
@@ -124,15 +128,6 @@ export default {
     }
   },
   methods: {
-    getUsersMaxConcurrentProjects(user) {
-      const userProjects = this.projectsByUser(user);
-
-      const concurrentProjects = userProjects.map(
-        project => userProjects.filter(data => project.dateStart.within(data.range)).length
-      );
-
-      return concurrentProjects.length ? Math.max(...concurrentProjects) : 0;
-    },
     nextYear() {
       this.years += 1;
     },
@@ -194,8 +189,7 @@ export default {
         };
       }
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 
@@ -251,7 +245,13 @@ export default {
     }
     &--empty {
       background-color: lighten(#999, 25%) !important;
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,.1) 3px, rgba(255,255,255,.1) 8px);
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(255, 255, 255, 0.1) 3px,
+        rgba(255, 255, 255, 0.1) 8px
+      );
       z-index: 1;
       .gantt__row-first {
         border-width: 1px 1px 0 0;

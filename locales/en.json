@@ -9,6 +9,7 @@
   "month": "Month | Months",
   "parallel": "Parallel",
   "presentation": "Presentation",
+  "select-unit": "Select unit",
   "pagination": "{0} of {1}",
   "project": {
     "self": "Project | Projects",
