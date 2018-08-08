@@ -21,3 +21,6 @@ yarn-error.log*
 *.sw*
 
 _*.js
+
+coverage
+.nyc_output
