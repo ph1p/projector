@@ -17,6 +17,6 @@ export const positions = positionsData;
 
 export default {
   users,
-  unitsData,
+  units,
   positions
 };
