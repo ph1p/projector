@@ -71,20 +71,61 @@ select {
     }
   }
 }
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 30px;
+  &-field {
+    margin-bottom: 20px;
+
+    .color {
+      position: relative;
+      border: 1px solid #999;
+      border-radius: 100%;
+      box-sizing: border-box;
+      padding: 4px;
+      margin: -10px 0 -12px 5px;
+      display: inline-block;
+      &__preview {
+        border-radius: 100%;
+        width: 25px;
+        height: 25px;
+      }
+      &__picker {
+        position: absolute;
+        z-index: 5;
+        top: 0px;
+        right: 45px;
+      }
+    }
+    input {
+      width: 100%;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 12px;
 
-  .tooltip-inner {
+  &-inner {
     background: black;
     color: white;
     border-radius: 16px;
     padding: 5px 10px 4px;
   }
 
-  .tooltip-arrow {
+  &-arrow {
     width: 0;
     height: 0;
     border-style: solid;
@@ -154,22 +195,6 @@ select {
     }
   }
 
-  &.popover {
-    $color: #f9f9f9;
-
-    .popover-inner {
-      background: $color;
-      color: black;
-      padding: 24px;
-      border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, 0.1);
-    }
-
-    .popover-arrow {
-      border-color: $color;
-    }
-  }
-
   &[aria-hidden='true'] {
     visibility: hidden;
     opacity: 0;
@@ -181,5 +206,11 @@ select {
     opacity: 1;
     transition: opacity 0.15s;
   }
+}
+
+.btn-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 30px;
 }
 </style>
