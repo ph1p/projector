@@ -140,51 +140,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.btn-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
-}
 .user-lists {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 30px;
-}
-.form {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 40px;
-  grid-gap: 30px;
-  .color {
-    position: relative;
-    border: 1px solid #999;
-    border-radius: 100%;
-    box-sizing: border-box;
-    padding: 4px;
-    display: inline-block;
-    &__preview {
-      border-radius: 100%;
-      width: 25px;
-      height: 25px;
-    }
-    &__picker {
-      position: absolute;
-      z-index: 5;
-      top: 0px;
-      right: 45px;
-    }
-  }
-  .form-field {
-    margin-bottom: 20px;
-    input {
-      width: 100%;
-      font-size: 14px;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    &:last-child {
-      margin: 0;
-    }
-  }
 }
 </style>
