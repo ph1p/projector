@@ -9,6 +9,8 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 
+import { users, units, positions } from '@/data';
+
 Vue.config.productionTip = false;
 
 Vue.use(VTooltip);
@@ -32,6 +34,15 @@ const i18n = new VueI18n({
 });
 
 const helpers = {
+  data() {
+    return {
+      globalData: {
+        users,
+        units,
+        positions
+      }
+    };
+  },
   computed: {
     getRandomColor() {
       let color = '#';
