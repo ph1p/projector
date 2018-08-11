@@ -15,18 +15,20 @@
 
 
     <ul class="users-list">
-      <li v-for="user in allUsers" :class="user.isChecked ? 'active': ''" :key="user.name" @click="toggleChecked(user.id, user.concurrentProjectsByProject)">
+      <li v-for="user in allUsers" :class="user.isChecked ? 'active': ''" :key="user.name" @click="clickUser(user)">
       <div class="user">
           <div class="unit-identifier">
             <span :style="{backgroundColor: user.unit.color}"></span>
           </div>
           <div class="user-info">
-          {{user.name}}<span>{{user.position.name}}</span>
+            {{user.name}}<span>{{user.position.name}}</span>
 
-          <div class="caution" v-if="user.concurrentProjectsByProject >= maxConcurrentProjectsPerUser">!</div>
-          <p>
-            {{$t('project.amount-parallel', { amount: user.concurrentProjectsByProject })}}
-          </p>
+            <div v-if="user.concurrentProjectsByProject">
+              <div class="caution" v-if="user.concurrentProjectsByProject >= maxConcurrentProjectsPerUser">!</div>
+              <p>
+                {{$t('project.amount-parallel', { amount: user.concurrentProjectsByProject })}}
+              </p>
+            </div>
           </div>
       </div>
       </li>
@@ -40,7 +42,6 @@ import find from 'lodash/find';
 import groupBy from 'lodash/groupBy';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
-import data from '../data';
 
 const moment = extendMoment(Moment);
 
@@ -49,17 +50,19 @@ export default {
   data() {
     return {
       searchTerm: '',
-      units: data.units,
       selectedUnit: ''
     };
   },
   props: {
     users: Array,
-    toggleChecked: Function,
+    clickUser: Function,
     project: Object
   },
   computed: {
     ...mapGetters(['projects', 'projectsByUser', 'maxConcurrentProjectsPerUser']),
+    units() {
+      return this.globalData.units;
+    },
     startDate() {
       return this.project.dateStart ? moment(this.project.dateStart) : false;
     },
@@ -79,20 +82,26 @@ export default {
           }
         })
         .map(user => {
-          const userProjects = this.projectsByUser(user);
-
-          const concurrentProjectsByProject = userProjects.filter(
-              project => project.id !== this.project.id ? project.range.contains(this.startDate) || project.range.contains(this.endDate) : false
+          if (this.project) {
+            const userProjects = this.projectsByUser(user);
+            const concurrentProjectsByProject = userProjects.filter(
+              project =>
+                project.id !== this.project.id
+                  ? project.range.contains(this.startDate) || project.range.contains(this.endDate)
+                  : false
             ).length;
 
-          if(concurrentProjectsByProject >= this.maxConcurrentProjectsPerUser) {
-            user.isChecked = false;
+            if (concurrentProjectsByProject >= this.maxConcurrentProjectsPerUser) {
+              user.isChecked = false;
+            }
+
+            return {
+              ...user,
+              concurrentProjectsByProject
+            };
           }
 
-          return {
-            ...user,
-            concurrentProjectsByProject
-          };
+          return user;
         });
     }
   }

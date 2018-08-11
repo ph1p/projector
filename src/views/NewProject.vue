@@ -32,7 +32,7 @@
       <UserList
         :project="localProject"
         :users="localUsers"
-        :toggleChecked="toggleChecked"
+        :clickUser="clickUser"
       />
     </div>
 
@@ -117,7 +117,7 @@ export default {
     findUserById(id) {
       return this.localUsers.filter(user => user.id === id)[0] || {};
     },
-    toggleChecked(id, maxConcurrentProjects) {
+    clickUser({ id, maxConcurrentProjects }) {
       const user = this.findUserById(id);
       if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked) {
         user.isChecked = !user.isChecked;
