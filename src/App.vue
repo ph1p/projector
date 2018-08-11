@@ -58,6 +58,8 @@ select {
 .wrapper {
   margin: 102px auto 40px;
   width: 900px;
+  padding: 0 30px;
+  box-sizing: content-box;
 }
 #nav {
   padding: 30px;
