@@ -345,11 +345,11 @@ export default {
         }
         &.left {
           box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, 0.8);
-          border-radius: 0 6px 6px 0;
+          border-radius: 0 20px 20px 0;
         }
         &.right {
           box-shadow: inset -5px 0 10px -5px rgba(0, 0, 0, 0.8);
-          border-radius: 6px 0 0 6px;
+          border-radius: 20px 0 0 20px;
         }
         &.expand {
           box-shadow: inset 9px 0 10px -10px rgba(0, 0, 0, 0.8), inset -9px 0 10px -10px rgba(0, 0, 0, 0.8);
