@@ -1,16 +1,22 @@
-import units from './units';
-import users from './users';
-import positions from './positions';
-import knowHow from './knowHow';
+import unitsData from './units';
+import usersData from './users';
+import positionsData from './positions';
+import knowHowData from './knowHow';
+
+const mappedUsers = usersData.map(user => ({
+  ...user,
+  unit: unitsData.filter(unit => unit.id === user.unit)[0],
+  position: positionsData.filter(position => position.id === user.position)[0],
+  knowHow: knowHowData.filter(kh => user.knowHow.indexOf(kh.id) !== -1),
+  isChecked: false
+}));
+
+export const users = mappedUsers;
+export const units = unitsData;
+export const positions = positionsData;
 
 export default {
-  users: users.map(user => ({
-    ...user,
-    unit: units.filter(unit => unit.id === user.unit)[0],
-    position: positions.filter(position => position.id === user.position)[0],
-    knowHow: knowHow.filter(kh => user.knowHow.indexOf(kh.id) !== -1),
-    isChecked: false
-  })),
-  units,
+  users,
+  unitsData,
   positions
 };
