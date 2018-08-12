@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
@@ -73,7 +73,7 @@ export default {
     '$route.params.id': 'init'
   },
   computed: {
-    ...mapGetters(['projects', 'projectById']),
+    ...mapGetters('projects', ['projects', 'projectById']),
     currentProjectId() {
       return parseInt(this.$route.params.id, 0);
     },

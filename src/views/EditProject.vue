@@ -47,14 +47,14 @@
 
       <div class="btn-group">
         <Button to="/" type="normal">{{$t('back')}}</Button>
-        <Button @click.native="update" type="success">{{$t('save')}}</Button>
+        <Button @click.native="updateProject" type="success">{{$t('save')}}</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
@@ -93,7 +93,8 @@ export default {
     Gantt
   },
   computed: {
-    ...mapGetters(['projects', 'projectById', 'maxConcurrentProjectsPerUser']),
+    ...mapGetters('projects', ['projects', 'projectById']),
+    ...mapGetters('settings', ['maxConcurrentProjectsPerUser']),
     checkedUsers() {
       return this.users.filter(user => user.isChecked);
     },
@@ -102,7 +103,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateProject']),
+    ...mapMutations('projects', ['update']),
     init() {
       this.storeProject = this.projectById(this.$route.params.id);
 
@@ -122,8 +123,8 @@ export default {
         this.$router.replace('/');
       }
     },
-    update() {
-      this.updateProject({
+    updateProject() {
+      this.update({
         ...this.project,
         users: this.checkedUsers
       });

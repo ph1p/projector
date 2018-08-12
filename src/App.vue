@@ -20,7 +20,7 @@ export default {
     }
   },
   created() {
-    this.$i18n.locale = this.$store.getters.language;
+    this.$i18n.locale = this.$store.getters['settings/language'];
   }
 };
 </script>
@@ -105,9 +105,6 @@ select {
       border: 1px solid #ddd;
       padding: 10px;
       border-radius: 5px;
-    }
-    &:last-child {
-      margin: 0;
     }
   }
 }
