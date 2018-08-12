@@ -4,7 +4,7 @@
       <router-link class="navigation__item" active-class="active" to="/" exact>
           <a>{{$tc('project.self', 2)}}</a>
       </router-link>
-      <router-link class="navigation__item" active-class="active" to="/newProject" exact>
+      <router-link class="navigation__item" active-class="active" to="/project/create" exact>
           <a>{{$t('project.new')}}</a>
       </router-link>
       <router-link class="navigation__item" active-class="active" to="/presentation" exact>

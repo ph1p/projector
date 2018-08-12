@@ -2,9 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 const Project = () => import(/* webpackChunkName: "project" */ './views/Project.vue');
-const NewProject = () => import(/* webpackChunkName: "new-project" */ './views/NewProject.vue');
+const CreateProject = () => import(/* webpackChunkName: "new-project" */ './views/CreateProject');
 const EditProject = () => import(/* webpackChunkName: "edit-project" */ './views/EditProject.vue');
-const ProjectPresentation = () => import(/* webpackChunkName: "project-presentation" */ './views/ProjectPresentation.vue');
+const ProjectPresentation = () =>
+  import(/* webpackChunkName: "project-presentation" */ './views/ProjectPresentation.vue');
 const Presentation = () => import(/* webpackChunkName: "presentation" */ './views/Presentation.vue');
 const Teams = () => import(/* webpackChunkName: "teams" */ './views/Teams.vue');
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/project/create/:step(\\d+)?',
+      name: 'create-project',
+      component: CreateProject
     },
     {
       path: '/project/:id(\\d+)',
@@ -42,11 +48,6 @@ export default new Router({
       meta: {
         hideNavigation: true
       }
-    },
-    {
-      path: '/newProject',
-      name: 'new-project',
-      component: NewProject
     },
     {
       path: '/teams',

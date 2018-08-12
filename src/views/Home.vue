@@ -8,7 +8,7 @@
         <UnitList :users="getUsersByIds(project.users)" />
       </router-link>
     </ul>
-    <InfoMessage v-else :btnText="$t('project.new')" btnLink="/newProject" :text="$t('project.nothing')" />
+    <InfoMessage v-else :btnText="$t('project.new')" btnLink="/project/create" :text="$t('project.nothing')" />
 
     <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
     <Gantt :users="usersInUnit([1,2,3,4,5,6])" />
