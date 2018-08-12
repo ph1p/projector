@@ -5,7 +5,7 @@
   "back": "Zurück",
   "color": "Farbe",
   "from": "Von",
-  "to": "Zu",
+  "to": "Bis",
   "month": "Monat | Monate",
   "parallel": "Parallel",
   "presentation": "Präsentation",
@@ -19,6 +19,7 @@
     "new": "Neues Projekt",
     "nothing": "Es sind noch keine Projekte angelegt worden",
     "who-is-there": "Wer ist dabei?",
+    "time-allocation": "Zeiteinteilung",
     "time-beam": "Zeitstrahl",
     "edit-with-name": "Projekt \"{name}\" editieren"
   },

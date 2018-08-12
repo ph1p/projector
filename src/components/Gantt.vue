@@ -88,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['projects', 'projectsByUser']),
+    ...mapGetters('projects', ['projects', 'projectsByUser']),
     shortMonthNames() {
       return moment.monthsShort();
     },

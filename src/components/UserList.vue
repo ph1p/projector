@@ -59,7 +59,8 @@ export default {
     project: Object
   },
   computed: {
-    ...mapGetters(['projects', 'projectsByUser', 'maxConcurrentProjectsPerUser']),
+    ...mapGetters('projects', ['projects', 'projectsByUser', 'maxConcurrentProjectsPerUser']),
+    ...mapGetters('settings', ['maxConcurrentProjectsPerUser']),
     units() {
       return this.globalData.units;
     },

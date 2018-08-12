@@ -27,7 +27,7 @@ export default {
   name: 'Navigation',
   data() {
     return {
-      language: this.$store.getters.language
+      language: this.$store.getters['settings/language']
     };
   },
   watch: {
@@ -38,11 +38,11 @@ export default {
   },
   computed: {
     currentLanguage() {
-      return this.$store.getters.language;
+      return this.$store.getters['settings/language'];
     }
   },
   methods: {
-    ...mapMutations(['setLanguage'])
+    ...mapMutations('settings', ['setLanguage'])
   }
 };
 </script>

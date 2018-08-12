@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
@@ -105,9 +105,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addProject']),
+    ...mapMutations('projects', ['add']),
     add() {
-      this.addProject({
+      this.add({
         ...this.localProject,
         users: this.checkedUsers
       });

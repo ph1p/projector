@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import Datepicker from 'vuejs-datepicker';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
