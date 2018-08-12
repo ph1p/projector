@@ -2,10 +2,10 @@
   <div class="presentation" v-if="storeProject">
     <h3>{{$tc('project.self')}} "{{project.name}}" ({{startDate}} - {{endDate}})</h3>
 
-    <h3 v-if="storeProject.users.length">{{$t('project.who-is-there')}}</h3>
-    <UnitList :users="storeProject.users" />
+    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+    <UnitList :users="checkedUsers" />
 
-    <h3 v-if="storeProject.users.length">{{$t('project.time-beam')}}</h3>
+    <h3 v-if="checkedUsers.length">{{$t('project.time-beam')}}</h3>
     <Gantt
       class="overwrite_gantt"
       :disableHeader="true"
@@ -14,7 +14,7 @@
       :showPagination="true"
       :date="project.dateStart"
       :highlightProject="currentProjectId"
-      :users="storeProject.users" />
+      :users="checkedUsers" />
   </div>
 </template>
 
@@ -49,7 +49,7 @@ export default {
     '$route.params.id': 'init'
   },
   computed: {
-    ...mapGetters(['projects', 'projectById']),
+    ...mapGetters('projects', ['projects', 'projectById']),
     currentProjectId() {
       return parseInt(this.$route.params.id, 0);
     },
@@ -58,6 +58,12 @@ export default {
     },
     endDate() {
       return moment(this.project.dateEnd).format('DD.MM.YYYY');
+    },
+    checkedUserIds() {
+      return this.users.filter(user => user.isChecked).map(user => user.id);
+    },
+    checkedUsers() {
+      return this.checkedUserIds.map(id => this.findUserById(id));
     }
   },
   methods: {
@@ -68,7 +74,7 @@ export default {
         this.users = data.users.map(user => {
           return {
             ...user,
-            isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
+            isChecked: this.storeProject.users.filter(id => id === user.id) > 0
           };
         });
 

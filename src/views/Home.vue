@@ -5,12 +5,10 @@
     <ul class="projects" v-if="projects.length">
       <router-link tag="li" :style="{borderColor: project.color}" :to="`/project/${project.id}`" v-for="(project, index) in projects" :key="project.name+index">
         <strong>{{project.id}}.) {{project.name}}</strong>
-        <UnitList :users="project.users" />
+        <UnitList :users="getUsersByIds(project.users)" />
       </router-link>
     </ul>
     <InfoMessage v-else :btnText="$t('project.new')" btnLink="/newProject" :text="$t('project.nothing')" />
-
-
 
     <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
     <Gantt :users="usersInUnit([1,2,3,4,5,6])" />
@@ -36,7 +34,7 @@ export default {
   name: 'home',
   data() {
     return {
-      users: orderBy(data.users, 'unit.name', 'asc')
+      users: []
     };
   },
   components: {
@@ -46,6 +44,9 @@ export default {
   },
   computed: {
     ...mapGetters('projects', ['projects'])
+  },
+  created() {
+    this.users = orderBy(this.globalData.users, 'unit.name', 'asc');
   },
   methods: {
     usersInUnit(unitIds) {

@@ -41,9 +41,8 @@
 
       <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
       <UnitList :users="checkedUsers" />
-
       <hr>
-      <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="storeProject.users" />
+      <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="checkedUsers" />
 
       <div class="btn-group">
         <Button to="/" type="normal">{{$t('back')}}</Button>
@@ -95,8 +94,11 @@ export default {
   computed: {
     ...mapGetters('projects', ['projects', 'projectById']),
     ...mapGetters('settings', ['maxConcurrentProjectsPerUser']),
+    checkedUserIds() {
+      return this.users.filter(user => user.isChecked).map(user => user.id);
+    },
     checkedUsers() {
-      return this.users.filter(user => user.isChecked);
+      return this.checkedUserIds.map(id => this.findUserById(id));
     },
     currentProjectId() {
       return parseInt(this.$route.params.id, 0);
@@ -105,19 +107,20 @@ export default {
   methods: {
     ...mapMutations('projects', ['update']),
     init() {
+      this.users = this.globalData.users;
       this.storeProject = this.projectById(this.$route.params.id);
 
       if (this.storeProject) {
-        this.users = data.users.map(user => {
+        this.users = this.users.map(user => {
           return {
             ...user,
-            isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id).length > 0
+            isChecked: this.storeProject.users.filter(id => id === user.id).length > 0
           };
         });
 
         this.project = {
           ...this.storeProject,
-          users: orderBy(this.checkedUsers, 'name', 'asc')
+          users: this.checkedUserIds
         };
       } else {
         this.$router.replace('/');
@@ -126,17 +129,15 @@ export default {
     updateProject() {
       this.update({
         ...this.project,
-        users: this.checkedUsers
+        users: this.checkedUserIds
       });
       this.storeProject = this.projectById(this.$route.params.id);
       this.$snotify.success(this.$t('notifications.project-edited'));
     },
-    findUserById(id) {
-      return this.users.filter(user => user.id === id)[0];
-    },
     clickUser({ id, maxConcurrentProjects }) {
-      const user = this.findUserById(id);
-      if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked) {
+      const user = this.users.filter(user => user.id === id)[0];
+
+      if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked || !maxConcurrentProjects) {
         user.isChecked = !user.isChecked;
       } else {
         this.$snotify.error(this.$t('notifications.to-many-projects'));
@@ -144,7 +145,7 @@ export default {
     },
     usersInUnit(unitIds) {
       return this.users
-        ? this.users.filter(user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0])
+        ? this.users.filter(user => this.globalData.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0])
         : [];
     }
   },
