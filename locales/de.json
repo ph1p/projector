@@ -27,5 +27,13 @@
     "to-many-projects": "Diese Person hat zu viele parallele Projekte in diesem Zeitraum",
     "project-created": "Projekt erfolgreich hinzugefügt",
     "project-edited": "Projekt erfolgreich aktualisiert"
+  },
+  "team": {
+    "self": "Team | Teams",
+    "name": "Teamname",
+    "add": "Team hinzufügen",
+    "new": "Neues Team",
+    "edit-with-name": "Team \"{name}\" editieren",
+    "nothing": "Es sind noch keine Teams angelegt worden"
   }
 }

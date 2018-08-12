@@ -15,7 +15,7 @@
     "self": "Project | Projects",
     "amount-parallel": "{amount} parallel Projects",
     "name": "Project Name",
-    "add": "Add project",
+    "add": "Add Project",
     "new": "New Project",
     "nothing": "There are currently no projects",
     "who-is-there": "Who is there?",
@@ -27,5 +27,13 @@
     "to-many-projects": "This person has too many parallel projects during this period",
     "project-created": "Project successfully added",
     "project-edited": "Project successfully edited"
+  },
+  "team": {
+    "self": "Team | Teams",
+    "name": "Team Name",
+    "add": "Add Team",
+    "new": "New Team",
+    "edit-with-name": "Edit \"{name}\"",
+    "nothing": "There are currently no teams"
   }
 }
