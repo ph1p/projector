@@ -42,7 +42,7 @@
 
     <div :class="isProjectValid && 'btn-group'">
       <Button to="/" type="normal">{{$t('back')}}</Button>
-      <Button v-if="isProjectValid" @click.native="add" type="success">{{$t('project.add')}}</Button>
+      <Button v-if="isProjectValid" @click.native="addProject" type="success">{{$t('project.add')}}</Button>
     </div>
   </div>
 </template>
@@ -57,7 +57,6 @@ import { Sketch } from 'vue-color';
 import UnitList from '@/components/UnitList.vue';
 import Button from '@/components/layout/Button.vue';
 import UserList from '@/components/UserList.vue';
-import data from '@/data';
 
 export default {
   name: 'new-project',
@@ -65,12 +64,12 @@ export default {
     return {
       isColorPickerOpen: false,
       inputColor: '#ffffff',
+      localUsers: [],
       localProject: {
         name: '',
         dateStart: '',
         dateEnd: ''
       },
-      localUsers: orderBy(data.users, 'unit.name', 'asc'),
       localProjects: []
     };
   },
@@ -87,7 +86,8 @@ export default {
     Button
   },
   computed: {
-    ...mapGetters(['projects', 'maxConcurrentProjectsPerUser']),
+    ...mapGetters('settings', ['maxConcurrentProjectsPerUser']),
+    ...mapGetters('projects', ['projects']),
     isProjectValid() {
       return (
         this.localProject.name !== '' &&
@@ -100,38 +100,42 @@ export default {
     isDateSpanValid() {
       return moment(this.localProject.dateEnd).diff(moment(this.localProject.dateStart)) > 0;
     },
+    checkedUserIds() {
+      return this.localUsers.filter(user => user.isChecked).map(user => user.id);
+    },
     checkedUsers() {
-      return this.localUsers.filter(user => user.isChecked);
+      return this.checkedUserIds.map(id => this.findUserById(id));
     }
   },
   methods: {
     ...mapMutations('projects', ['add']),
-    add() {
+    addProject() {
       this.add({
         ...this.localProject,
-        users: this.checkedUsers
+        users: this.checkedUserIds
       });
+
       this.$snotify.success(this.$t('notifications.project-created'));
       this.$router.push('/');
     },
-    findUserById(id) {
-      return this.localUsers.filter(user => user.id === id)[0] || {};
-    },
     clickUser({ id, maxConcurrentProjects }) {
-      const user = this.findUserById(id);
-      if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked) {
+      const user = this.localUsers.filter(user => user.id === id)[0];
+
+      if (maxConcurrentProjects < this.maxConcurrentProjectsPerUser || user.isChecked || !maxConcurrentProjects) {
         user.isChecked = !user.isChecked;
       } else {
         this.$snotify.error(this.$t('notifications.to-many-projects'));
       }
     },
     usersInUnit(unitIds) {
-      return this.localUsers.filter(user => data.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]);
+      return this.localUsers.filter(
+        user => this.globalData.units.filter(() => unitIds.indexOf(user.unit.id) !== -1)[0]
+      );
     }
   },
   created() {
     this.localProject.color = this.getRandomColor;
-    this.localUsers = this.localUsers.map(user => ({
+    this.localUsers = orderBy(this.globalData.users, 'unit.name', 'asc').map(user => ({
       ...user,
       isChecked: false
     }));

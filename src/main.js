@@ -60,6 +60,12 @@ const helpers = {
       const [firstname, lastname] = name.toLowerCase().split(' ');
 
       return `${firstname.substr(0, 1)}.${lastname.substr(0, lastname.length)}`;
+    },
+    getUsersByIds(userIds) {
+      return userIds.map(id => this.findUserById(id));
+    },
+    findUserById(id) {
+      return this.globalData.users.filter(user => user.id === id)[0] || {};
     }
   }
 };

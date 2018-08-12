@@ -33,7 +33,7 @@ export default {
     Gantt
   },
   computed: {
-    ...mapGetters(['projects']),
+    ...mapGetters('projects', ['projects']),
     startDate() {
       return moment().format('DD.MM.YYYY');
     },

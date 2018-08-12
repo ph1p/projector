@@ -28,13 +28,13 @@
 
     <hr />
 
-    <h3 v-if="storeProject.users.length">{{$t('project.who-is-there')}}</h3>
-    <UnitList :users="storeProject.users" />
+    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+    <UnitList :users="checkedUsers" />
 
     <hr />
 
-    <h3 v-if="storeProject.users.length">{{$t('project.time-beam')}}</h3>
-    <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="storeProject.users" />
+    <h3 v-if="checkedUsers.length">{{$t('project.time-beam')}}</h3>
+    <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="checkedUsers" />
 
     <div class="btn-group">
       <Button to="/" type="normal">{{$t('back')}}</Button>
@@ -82,6 +82,12 @@ export default {
     },
     endDate() {
       return moment(this.project.dateEnd).format('DD.MM.YYYY');
+    },
+    checkedUserIds() {
+      return this.users.filter(user => user.isChecked).map(user => user.id);
+    },
+    checkedUsers() {
+      return this.checkedUserIds.map(id => this.findUserById(id));
     }
   },
   methods: {
@@ -92,7 +98,7 @@ export default {
         this.users = data.users.map(user => {
           return {
             ...user,
-            isChecked: this.storeProject.users.filter(pUser => pUser.id === user.id) > 0
+            isChecked: this.storeProject.users.filter(id => id === user.id) > 0
           };
         });
 
@@ -112,5 +118,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 </style>

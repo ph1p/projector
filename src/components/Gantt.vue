@@ -116,7 +116,7 @@ export default {
           .map(user => ({
             ...user,
             projects: this.projects.filter(
-              project => project.users.filter(pUser => pUser.name === user.name).length > 0
+              project => this.getUsersByIds(project.users).filter(pUser => pUser.name === user.name).length > 0
             )
           }))
           // filter user if limiters are passed
