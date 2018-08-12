@@ -6,6 +6,7 @@ const NewProject = () => import(/* webpackChunkName: "new-project" */ './views/N
 const EditProject = () => import(/* webpackChunkName: "edit-project" */ './views/EditProject.vue');
 const ProjectPresentation = () => import(/* webpackChunkName: "project-presentation" */ './views/ProjectPresentation.vue');
 const Presentation = () => import(/* webpackChunkName: "presentation" */ './views/Presentation.vue');
+const Teams = () => import(/* webpackChunkName: "teams" */ './views/Teams.vue');
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/newProject',
       name: 'new-project',
       component: NewProject
+    },
+    {
+      path: '/teams',
+      name: 'teams',
+      component: Teams
     }
   ]
 });

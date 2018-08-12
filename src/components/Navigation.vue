@@ -10,6 +10,9 @@
       <router-link class="navigation__item" active-class="active" to="/presentation" exact>
           <a>{{$t('presentation')}}</a>
       </router-link>
+      <router-link class="navigation__item" active-class="active" to="/teams" exact>
+          <a>{{$tc('team.self', 2)}}</a>
+      </router-link>
       <div class="navigation__item navigation__item--languages">
         <select name="language" v-model="language">
           <option value="en" :selected="currentLanguage === 'en'">en</option>
@@ -61,7 +64,7 @@ export default {
     height: 100%;
     width: 900px;
     display: grid;
-    grid-template-columns: repeat(3, max-content) 1fr;
+    grid-template-columns: repeat(4, max-content) 1fr;
     &__item {
       margin: 0;
       padding: 0;
