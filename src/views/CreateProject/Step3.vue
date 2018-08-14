@@ -3,6 +3,9 @@
     <h3>Step {{step}}</h3>
 
     Step3
+
+
+<div @click="prev">prev</div>
   </div>
 </template>
 
@@ -11,6 +14,10 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'Step3',
+  props: {
+    next: Function,
+    prev: Function
+  },
   data() {
     return {};
   },

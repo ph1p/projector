@@ -1,20 +1,13 @@
 <template>
   <div class="wrapper">
-    <h3>Step {{step}}</h3>
+    <h3>Step {{currentStep}}</h3>
 
-    <component :is="`Step${step}`" />
-
-    <div class="btn-group">
-      <Button v-if="step > 1" :to="`/project/create/${step - 1}`" type="normal">{{$t('back')}}</Button>
-      <Button v-if="step < maxSteps" :to="`/project/create/${step + 1}`" type="normal">{{$t('next')}}</Button>
-    </div>
+    <component :is="`Step${currentStep}`" :next="next" :prev="prev" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-
-import Button from '@/components/layout/Button.vue';
 
 import Step1 from '@/views/CreateProject/Step1.vue';
 import Step2 from '@/views/CreateProject/Step2.vue';
@@ -31,8 +24,7 @@ export default {
         ...before,
         [mod.default.name]: mod.default
       };
-    }, {}),
-    Button
+    }, {})
   },
   data() {
     return {
@@ -45,16 +37,42 @@ export default {
         dateEnd: '',
         type: 'USER'
       },
-      localProjects: []
+      localProjects: [],
+      currentStep: 1
     };
   },
   computed: {
-    step() {
-      return parseInt(this.$route.params.step) || 1;
-    },
     maxSteps() {
       return stepComponents.keys().length;
+    },
+    hasLessSteps() {
+      return this.currentStep > 1;
+    },
+    hasMoreSteps() {
+      return this.currentStep < this.maxSteps;
     }
+  },
+  methods: {
+    next() {
+      if (this.hasMoreSteps) {
+        this.currentStep += 1;
+      }
+    },
+    prev() {
+      if (this.hasLessSteps) {
+        this.currentStep -= 1;
+      }
+    }
+  },
+  watch: {
+    step(step) {
+      if (this.currentStep !== step) {
+        this.$router.push(`/project/create/${step}`);
+      }
+    }
+  },
+  created() {
+    this.currentStep = parseInt(this.$route.params.step) || 1;
   }
 };
 </script>

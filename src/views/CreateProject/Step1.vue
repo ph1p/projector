@@ -8,6 +8,8 @@
         Pick a team
     </div>
 
+<div @click="prev">prev</div>
+<div @click="next">next</div>
 
   </div>
 </template>
@@ -17,6 +19,10 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'Step1',
+  props: {
+    next: Function,
+    prev: Function
+  },
   data() {
     return {};
   },
