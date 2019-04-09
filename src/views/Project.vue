@@ -1,45 +1,40 @@
 <template>
   <div class="wrapper" v-if="storeProject">
-    <h3>{{$tc('project.self')}} "{{project.name}}"</h3>
+    <h3>{{ $tc('project.self') }} "{{ project.name }}"</h3>
 
     <div class="form">
       <div class="form-field">
-        <strong>{{$t('project.name')}}:</strong>
-        {{project.name}}
+        <strong>{{ $t('project.name') }}:</strong> {{ project.name }}
       </div>
 
       <div class="form-field">
-        <strong>{{$t('from')}}:</strong>
-        {{startDate}}
+        <strong>{{ $t('from') }}:</strong> {{ startDate }}
       </div>
 
       <div class="form-field">
-        <strong>{{$t('to')}}:</strong>
-        {{endDate}}
+        <strong>{{ $t('to') }}:</strong> {{ endDate }}
       </div>
 
       <div class="form-field">
-        <strong>{{$t('color')}}:</strong>
-        <div class="color">
-          <div class="color__preview" :style="{backgroundColor: project.color}"></div>
-        </div>
+        <strong>{{ $t('color') }}:</strong>
+        <div class="color"><div class="color__preview" :style="{ backgroundColor: project.color }"></div></div>
       </div>
     </div>
 
     <hr />
 
-    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+    <h3 v-if="checkedUsers.length">{{ $t('project.who-is-there') }}</h3>
     <UnitList :users="checkedUsers" />
 
     <hr />
 
-    <h3 v-if="checkedUsers.length">{{$t('project.time-beam')}}</h3>
+    <h3 v-if="checkedUsers.length">{{ $t('project.time-beam') }}</h3>
     <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="checkedUsers" />
 
     <div class="btn-group">
-      <Button to="/" type="normal">{{$t('back')}}</Button>
-      <Button :to="`/presentation/${currentProjectId}`" type="dark">{{$t('presentation')}}</Button>
-      <Button :to="`/project/edit/${currentProjectId}`" type="success">{{$t('edit')}}</Button>
+      <button to="/" type="normal">{{ $t('back') }}</button>
+      <button :to="`/presentation/${currentProjectId}`" type="dark">{{ $t('presentation') }}</button>
+      <button :to="`/project/edit/${currentProjectId}`" type="success">{{ $t('edit') }}</button>
     </div>
   </div>
 </template>
@@ -117,5 +112,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

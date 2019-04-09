@@ -60,8 +60,6 @@ const getters = {
   projectById: state => id => state.data.filter(project => project.id === parseInt(id, 0))[0]
 };
 
-
-
 export default {
   namespaced: true,
   state,

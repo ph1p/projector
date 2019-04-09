@@ -1,10 +1,6 @@
 <template>
-    <button v-if="!to" :class="`btn ${type}`">
-        <slot></slot>
-    </button>
-    <router-link v-else :class="`btn ${type}`" :to="to">
-        <slot></slot>
-    </router-link>
+  <button v-if="!to" :class="`btn ${type}`"><slot></slot></button>
+  <router-link v-else :class="`btn ${type}`" :to="to"> <slot></slot> </router-link>
 </template>
 
 <script>

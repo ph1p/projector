@@ -1,11 +1,11 @@
 <template>
   <div class="presentation" v-if="storeProject">
-    <h3>{{$tc('project.self')}} "{{project.name}}" ({{startDate}} - {{endDate}})</h3>
+    <h3>{{ $tc('project.self') }} "{{ project.name }}" ({{ startDate }} - {{ endDate }})</h3>
 
-    <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+    <h3 v-if="checkedUsers.length">{{ $t('project.who-is-there') }}</h3>
     <UnitList :users="checkedUsers" />
 
-    <h3 v-if="checkedUsers.length">{{$t('project.time-beam')}}</h3>
+    <h3 v-if="checkedUsers.length">{{ $t('project.time-beam') }}</h3>
     <Gantt
       class="overwrite_gantt"
       :disableHeader="true"
@@ -14,7 +14,8 @@
       :showPagination="true"
       :date="project.dateStart"
       :highlightProject="currentProjectId"
-      :users="checkedUsers" />
+      :users="checkedUsers"
+    />
   </div>
 </template>
 

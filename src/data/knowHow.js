@@ -50,19 +50,21 @@ export default [
   {
     id: 9,
     name: 'Node.js',
-    description: 'Node.js® is a JavaScript runtime built on Chrome\'s V8 JavaScript engine.',
+    description: "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
     url: 'https://nodejs.org/'
   },
   {
     id: 10,
     name: 'Golang',
-    description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.',
+    description:
+      'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.',
     url: 'https://golang.org/'
   },
   {
     id: 11,
     name: 'Rust',
-    description: 'Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.',
+    description:
+      'Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.',
     url: 'https://www.rust-lang.org/'
   },
   {
@@ -158,7 +160,8 @@ export default [
   {
     id: 27,
     name: 'Jenkins',
-    description: 'The leading open source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating any project.',
+    description:
+      'The leading open source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating any project.',
     url: 'https://jenkins.io/'
   },
   {
@@ -170,25 +173,28 @@ export default [
   {
     id: 29,
     name: 'git',
-    description: 'Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.',
+    description:
+      'Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.',
     url: 'https://git-scm.com/'
   },
   {
     id: 30,
     name: 'SASS',
-    description: 'Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.',
+    description:
+      'Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.',
     url: 'https://sass-lang.com/'
   },
   {
     id: 31,
     name: 'LESS',
-    description: 'It\'s CSS, with just a little more.',
+    description: "It's CSS, with just a little more.",
     url: 'http://lesscss.org/'
   },
   {
     id: 32,
     name: 'BEM',
-    description: 'BEM — Block Element Modifier is a methodology that helps you to create reusable components and code sharing in front-end development',
+    description:
+      'BEM — Block Element Modifier is a methodology that helps you to create reusable components and code sharing in front-end development',
     url: 'http://getbem.com/'
   },
   {
@@ -218,7 +224,8 @@ export default [
   {
     id: 37,
     name: 'npm',
-    description: 'npm is the package manager for JavaScript and the world’s largest software registry. Discover packages of reusable code — and assemble them in powerful new ways.',
+    description:
+      'npm is the package manager for JavaScript and the world’s largest software registry. Discover packages of reusable code — and assemble them in powerful new ways.',
     url: 'https://www.npmjs.com/'
   },
   {
@@ -266,13 +273,15 @@ export default [
   {
     id: 44,
     name: 'JWT',
-    description: 'JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.',
+    description:
+      'JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.',
     url: 'http://jwt.io/'
   },
   {
     id: 45,
     name: 'OAuth 2.0',
-    description: 'OAuth 2.0 is the industry-standard protocol for authorization. OAuth 2.0 supersedes the work done on the original OAuth protocol created in 2006.',
+    description:
+      'OAuth 2.0 is the industry-standard protocol for authorization. OAuth 2.0 supersedes the work done on the original OAuth protocol created in 2006.',
     url: 'https://oauth.net/2/'
   },
   {
@@ -284,7 +293,8 @@ export default [
   {
     id: 47,
     name: 'apache',
-    description: 'The Apache HTTP Server Project is an effort to develop and maintain an open-source HTTP server for modern operating systems including UNIX and Windows.',
+    description:
+      'The Apache HTTP Server Project is an effort to develop and maintain an open-source HTTP server for modern operating systems including UNIX and Windows.',
     url: 'https://httpd.apache.org/'
   },
   {
@@ -302,7 +312,8 @@ export default [
   {
     id: 50,
     name: 'GraphQL',
-    description: 'GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.',
+    description:
+      'GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.',
     url: 'https://graphql.org/'
   }
 ];

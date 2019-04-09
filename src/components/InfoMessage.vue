@@ -1,9 +1,7 @@
 <template>
   <div class="info">
-    <div class="text">
-      {{text}}
-    </div>
-    <Button v-if="btnText" type="success inline" :to="btnLink">{{btnText}}</Button>
+    <div class="text">{{ text }}</div>
+    <button v-if="btnText" type="success inline" :to="btnLink">{{ btnText }}</button>
   </div>
 </template>
 

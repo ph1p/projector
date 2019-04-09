@@ -2,7 +2,7 @@
   <div id="app">
     <vue-snotify></vue-snotify>
     <Navigation v-if="!hideNavigation" />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

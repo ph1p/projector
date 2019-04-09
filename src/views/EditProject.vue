@@ -1,52 +1,46 @@
 <template>
   <div class="wrapper">
     <div class="home" v-if="storeProject">
-      <h3>{{$t('project.edit-with-name', { name: project.name })}}</h3>
+      <h3>{{ $t('project.edit-with-name', { name: project.name }) }}</h3>
 
       <div class="form">
-
         <div class="form-field">
-          <strong>{{$t('project.name')}}:</strong>
-          <input v-model="project.name" type="text">
+          <strong>{{ $t('project.name') }}:</strong> <input v-model="project.name" type="text" />
         </div>
 
         <div class="form-field">
-          <strong>{{$t('from')}}:</strong>
-          <datepicker v-model="project.dateStart"></datepicker>
+          <strong>{{ $t('from') }}:</strong> <datepicker v-model="project.dateStart"></datepicker>
         </div>
 
         <div class="form-field">
-          <strong>{{$t('to')}}:</strong>
-          <datepicker v-model="project.dateEnd"></datepicker>
+          <strong>{{ $t('to') }}:</strong> <datepicker v-model="project.dateEnd"></datepicker>
         </div>
 
         <div class="form-field">
-          <strong>{{$t('color')}}:</strong>
+          <strong>{{ $t('color') }}:</strong>
           <div class="color">
-            <div class="color__preview" :style="{backgroundColor: project.color}" @click="isColorPickerOpen = !isColorPickerOpen;"></div>
+            <div
+              class="color__preview"
+              :style="{ backgroundColor: project.color }"
+              @click="isColorPickerOpen = !isColorPickerOpen"
+            ></div>
             <color-picker class="color__picker" v-if="isColorPickerOpen" v-model="inputColor"></color-picker>
           </div>
         </div>
       </div>
 
-      <div class="user-lists">
-        <UserList
-          :project="project"
-          :users="users"
-          :clickUser="clickUser"
-        />
-      </div>
+      <div class="user-lists"><UserList :project="project" :users="users" :clickUser="clickUser" /></div>
 
-      <hr>
+      <hr />
 
-      <h3 v-if="checkedUsers.length">{{$t('project.who-is-there')}}</h3>
+      <h3 v-if="checkedUsers.length">{{ $t('project.who-is-there') }}</h3>
       <UnitList :users="checkedUsers" />
-      <hr>
+      <hr />
       <Gantt :date="project.dateStart" :highlightProject="currentProjectId" :users="checkedUsers" />
 
       <div class="btn-group">
-        <Button to="/" type="normal">{{$t('back')}}</Button>
-        <Button @click.native="updateProject" type="success">{{$t('save')}}</Button>
+        <button to="/" type="normal">{{ $t('back') }}</button>
+        <button @click.native="updateProject" type="success">{{ $t('save') }}</button>
       </div>
     </div>
   </div>

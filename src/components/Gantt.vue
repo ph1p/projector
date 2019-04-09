@@ -2,41 +2,49 @@
   <div v-if="allUsers">
     <div v-if="!disableHeader" class="header">
       <div class="navigation">
-      <span @click="previousYear"><</span>
-      <span @click="years = 0">{{currentYear}}</span>
-      <span @click="nextYear">></span>
+        <span @click="previousYear"><</span> <span @click="years = 0">{{ currentYear }}</span>
+        <span @click="nextYear">></span>
       </div>
-      <input class="search" :placeholder="`${$t('search')}...`" type="text" v-model="search">
+      <input class="search" :placeholder="`${$t('search')}...`" type="text" v-model="search" />
     </div>
 
     <div class="gantt">
       <div class="gantt__row gantt__row--months">
         <div class="gantt__row-first"></div>
-        <span v-for="name in shortMonthNames" :key="name">{{name}}</span>
+        <span v-for="name in shortMonthNames" :key="name">{{ name }}</span>
       </div>
-      <div class="gantt__row gantt__row--lines">
-        <span v-for="name in shortMonthNames" :key="name +'line'"></span>
-      </div>
+      <div class="gantt__row gantt__row--lines"><span v-for="name in shortMonthNames" :key="name + 'line'"></span></div>
 
-      <div class="gantt__row" v-for="user in allUsers" :key="user.name"  :class="!user.projects.length ? 'gantt__row--empty' : ''" >
+      <div
+        class="gantt__row"
+        v-for="user in allUsers"
+        :key="user.name"
+        :class="!user.projects.length ? 'gantt__row--empty' : ''"
+      >
         <div class="gantt__row-first">
-          {{user.name}}
-          <p v-if="user.projects.length > 1">{{ $tc('project.self', user.projects.length) }} {{user.projects.length}}</p>
+          {{ user.name }}
+          <p v-if="user.projects.length > 1">
+            {{ $tc('project.self', user.projects.length) }} {{ user.projects.length }}
+          </p>
         </div>
         <ul class="gantt__row-bars">
           <li
-          @click="$router.push(`/project/${project.id}`)"
-          v-for="(project, index) in user.projects"
-          v-tooltip="project.name"
-          :key="project.id"
-          :class="[getDirection(project.dateStart, project.dateEnd), highlightClass(project)]"
-          :style="getGridStyle(project, index)"><span>{{project.name}}</span></li>
+            @click="$router.push(`/project/${project.id}`)"
+            v-for="(project, index) in user.projects"
+            v-tooltip="project.name"
+            :key="project.id"
+            :class="[getDirection(project.dateStart, project.dateEnd), highlightClass(project)]"
+            :style="getGridStyle(project, index)"
+          >
+            <span>{{ project.name }}</span>
+          </li>
         </ul>
       </div>
     </div>
 
     <i18n path="pagination" tag="div" v-if="showPagination" class="pagination">
-      <strong>{{pages}}</strong>{{pageLimit}}
+      <strong>{{ pages }}</strong
+      >{{ pageLimit }}
     </i18n>
   </div>
 </template>

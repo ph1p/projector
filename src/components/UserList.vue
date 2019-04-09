@@ -1,36 +1,31 @@
 <template>
   <div class="users">
     <div class="header">
-      <div class="user-search">
-        <input type="text" :placeholder="`${$t('search')}...`" v-model="searchTerm">
-      </div>
+      <div class="user-search"><input type="text" :placeholder="`${$t('search')}...`" v-model="searchTerm" /></div>
 
       <div class="user-unit-select">
         <select name="blendingMode" v-model="selectedUnit" class="filter__blending-mode">
-          <option value="" :selected="!selectedUnit">{{$t('select-unit')}}</option>
-          <option v-for="unit in units" :key="unit.name" :value="unit.id" :selected="unit.id === selectedUnit">{{unit.name}}</option>
+          <option value="" :selected="!selectedUnit">{{ $t('select-unit') }}</option>
+          <option v-for="unit in units" :key="unit.name" :value="unit.id" :selected="unit.id === selectedUnit">{{
+            unit.name
+          }}</option>
         </select>
       </div>
     </div>
 
-
     <ul class="users-list">
-      <li v-for="user in allUsers" :class="user.isChecked ? 'active': ''" :key="user.name" @click="clickUser(user)">
-      <div class="user">
-          <div class="unit-identifier">
-            <span :style="{backgroundColor: user.unit.color}"></span>
-          </div>
+      <li v-for="user in allUsers" :class="user.isChecked ? 'active' : ''" :key="user.name" @click="clickUser(user)">
+        <div class="user">
+          <div class="unit-identifier"><span :style="{ backgroundColor: user.unit.color }"></span></div>
           <div class="user-info">
-            {{user.name}}<span>{{user.position.name}}</span>
+            {{ user.name }}<span>{{ user.position.name }}</span>
 
             <div v-if="user.concurrentProjectsByProject">
               <div class="caution" v-if="user.concurrentProjectsByProject >= maxConcurrentProjectsPerUser">!</div>
-              <p>
-                {{$t('project.amount-parallel', { amount: user.concurrentProjectsByProject })}}
-              </p>
+              <p>{{ $t('project.amount-parallel', { amount: user.concurrentProjectsByProject }) }}</p>
             </div>
           </div>
-      </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -85,11 +80,10 @@ export default {
         .map(user => {
           if (this.project) {
             const userProjects = this.projectsByUser(user);
-            const concurrentProjectsByProject = userProjects.filter(
-              project =>
-                project.id !== this.project.id
-                  ? project.range.contains(this.startDate) || project.range.contains(this.endDate)
-                  : false
+            const concurrentProjectsByProject = userProjects.filter(project =>
+              project.id !== this.project.id
+                ? project.range.contains(this.startDate) || project.range.contains(this.endDate)
+                : false
             ).length;
 
             if (concurrentProjectsByProject >= this.maxConcurrentProjectsPerUser) {

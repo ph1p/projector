@@ -1,31 +1,29 @@
 <template>
   <div class="wrapper">
-    <h3>{{$tc('team.self', 2)}}</h3>
+    <h3>{{ $tc('team.self', 2) }}</h3>
 
     <ul>
       <li v-for="team in teams" :key="team.name">
-        {{team.id}} {{team.name}}
+        {{ team.id }} {{ team.name }}
 
         <span @click="remove(team)">x</span>
 
-        <div v-for="user in teamUsers(team)" :key="user.name">{{user.name}}</div>
+        <div v-for="user in teamUsers(team)" :key="user.name">{{ user.name }}</div>
       </li>
     </ul>
 
     <hr />
     <div class="form">
       <div class="form-field">
-        <strong>{{$t('team.name')}}:</strong>
-        <input name="name" v-model="team.name" type="text">
-
+        <strong>{{ $t('team.name') }}:</strong> <input name="name" v-model="team.name" type="text" />
       </div>
     </div>
 
     <UserList :users="users" :clickUser="clickUser" />
 
     <div :class="'btn-group'">
-      <Button to="/" type="normal">{{$t('back')}}</Button>
-      <Button @click.native="add(team)" type="success">{{$t('team.add')}}</Button>
+      <button to="/" type="normal">{{ $t('back') }}</button>
+      <button @click.native="add(team)" type="success">{{ $t('team.add') }}</button>
     </div>
   </div>
 </template>
@@ -65,7 +63,7 @@ export default {
   methods: {
     ...mapMutations('teams', ['update', 'add', 'remove']),
     teamUsers(team) {
-      return team.users.map(id => this.users.filter(user => user.id === id)[0])
+      return team.users.map(id => this.users.filter(user => user.id === id)[0]);
     },
     clickUser({ id }) {
       const user = this.users.filter(user => user.id === id)[0] || {};
@@ -81,5 +79,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

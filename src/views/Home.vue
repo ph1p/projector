@@ -1,20 +1,26 @@
 <template>
   <div class="wrapper">
-    <h3 v-if="projects.length">{{$tc('project.self', 2)}}</h3>
+    <h3 v-if="projects.length">{{ $tc('project.self', 2) }}</h3>
 
     <ul class="projects" v-if="projects.length">
-      <router-link tag="li" :style="{borderColor: project.color}" :to="`/project/${project.id}`" v-for="(project, index) in projects" :key="project.name+index">
-        <strong>{{project.id}}.) {{project.name}}</strong>
+      <router-link
+        tag="li"
+        :style="{ borderColor: project.color }"
+        :to="`/project/${project.id}`"
+        v-for="(project, index) in projects"
+        :key="project.name + index"
+      >
+        <strong>{{ project.id }}.) {{ project.name }}</strong>
         <UnitList :users="getUsersByIds(project.users)" />
       </router-link>
     </ul>
     <InfoMessage v-else :btnText="$t('project.new')" btnLink="/newProject" :text="$t('project.nothing')" />
 
-    <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
-    <Gantt :users="usersInUnit([1,2,3,4,5,6])" />
+    <h3 v-if="projects.length">{{ $t('project.time-beam') }}</h3>
+    <Gantt :users="usersInUnit([1, 2, 3, 4, 5, 6])" />
     <hr />
 
-    <h3 v-if="projects.length">{{$t('project.time-beam')}}</h3>
+    <h3 v-if="projects.length">{{ $t('project.time-beam') }}</h3>
     <Gantt :users="usersInUnit([5])" />
   </div>
 </template>

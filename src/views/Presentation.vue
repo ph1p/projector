@@ -1,13 +1,14 @@
 <template>
   <div class="presentation">
-    <h3 v-if="unitUsers.length">{{$t('project.time-beam')}} ({{currentYear}})</h3>
+    <h3 v-if="unitUsers.length">{{ $t('project.time-beam') }} ({{ currentYear }})</h3>
     <Gantt
-        :disableHeader="true"
-        :date="startDate"
-        :start="startUsers"
-        :limit="userLimit"
-        :showPagination="true"
-        :users="unitUsers" />
+      :disableHeader="true"
+      :date="startDate"
+      :start="startUsers"
+      :limit="userLimit"
+      :showPagination="true"
+      :users="unitUsers"
+    />
   </div>
 </template>
 

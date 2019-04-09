@@ -1,12 +1,13 @@
 <template>
   <ul class="unit-list">
     <li v-for="(unitUsers, unitName) in groupByUnit(users)" :key="unitName">
-      <div class="unit-identifier">
-        <span :style="{backgroundColor: unitUsers[0].unit.color}"></span>
-      </div>
+      <div class="unit-identifier"><span :style="{ backgroundColor: unitUsers[0].unit.color }"></span></div>
       <div class="unit">
-        {{unitName}}
-        <p>{{unitUsers.length}} Personen (<span v-for="user in unitUsers" :key="user.name">{{user.name}}</span>)</p>
+        {{ unitName }}
+        <p>
+          {{ unitUsers.length }} Personen (<span v-for="user in unitUsers" :key="user.name">{{ user.name }}</span
+          >)
+        </p>
       </div>
     </li>
   </ul>

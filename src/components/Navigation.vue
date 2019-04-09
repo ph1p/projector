@@ -2,16 +2,16 @@
   <div class="container">
     <nav class="navigation">
       <router-link class="navigation__item" active-class="active" to="/" exact>
-          <a>{{$tc('project.self', 2)}}</a>
+        <a>{{ $tc('project.self', 2) }}</a>
       </router-link>
       <router-link class="navigation__item" active-class="active" to="/newProject" exact>
-          <a>{{$t('project.new')}}</a>
+        <a>{{ $t('project.new') }}</a>
       </router-link>
       <router-link class="navigation__item" active-class="active" to="/presentation" exact>
-          <a>{{$t('presentation')}}</a>
+        <a>{{ $t('presentation') }}</a>
       </router-link>
       <router-link class="navigation__item" active-class="active" to="/teams" exact>
-          <a>{{$tc('team.self', 2)}}</a>
+        <a>{{ $tc('team.self', 2) }}</a>
       </router-link>
       <div class="navigation__item navigation__item--languages">
         <select name="language" v-model="language">
